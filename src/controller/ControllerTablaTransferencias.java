@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.dao.ProductoDao;
 import modelo.dto.kardex.*;
@@ -61,7 +60,7 @@ public class ControllerTablaTransferencias implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(this.vistaTabla.ingresarRegistroBtn)) {
-            ControllerRegistro cR = new ControllerRegistro(producto.getItem());
+            ControllerRegistro cR = new ControllerRegistro(this.producto.getItem());
             vistaTabla.dispose();
         }
     }

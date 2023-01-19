@@ -45,6 +45,7 @@ public class ControllerRegistro implements ActionListener {
             if (producto.entradaProducto(cantidadEntrada, valorTotalEntrada)) {
                 InventarioProducto ip = new InventarioProducto(producto.tamañoArreglo(), fecha, conceptoEntrada, "Entrada", cantidadEntrada, valorUnitarioEntrada, valorTotalEntrada, producto.getCantidadTotal());
                 if (producto.crearRegistro(ip)) {
+                    modelo.guardar();
                     producto.guardar();
                     JOptionPane.showMessageDialog(null, "Se ha registrado la entrada satisfactoriamente");
                     ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem());
@@ -80,3 +81,4 @@ public class ControllerRegistro implements ActionListener {
 
     }
 }
+

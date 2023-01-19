@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/reyan/Documents/NetBeansProjects/ProyectoAlmacen/src/controller/ControllerRegistro.java</file>
+            <file>file:/C:/Users/reyan/Documents/NetBeansProjects/ProyectoAlmacen/src/modelo/dto/kardex/InventarioProducto.java</file>
+            <file>file:/C:/Users/reyan/Documents/NetBeansProjects/ProyectoAlmacen/src/controller/ControllerPrincipal.java</file>
+            <file>file:/C:/Users/reyan/Documents/NetBeansProjects/ProyectoAlmacen/src/vista/kardex/UIIngresoBusquedaProducto.java</file>
+            <file>file:/C:/Users/reyan/Documents/NetBeansProjects/ProyectoAlmacen/src/vista/UIPrincipal.java</file>
+            <file>file:/C:/Users/reyan/Documents/NetBeansProjects/ProyectoAlmacen/src/vista/kardex/UITablaTransferencias.java</file>
+            <file>file:/C:/Users/reyan/Documents/NetBeansProjects/ProyectoAlmacen/src/controller/ControllerIngresoBusquedaProducto.java</file>
+            <file>file:/C:/Users/reyan/Documents/NetBeansProjects/ProyectoAlmacen/src/vista/kardex/UIRegistro.java</file>
+            <file>file:/C:/Users/reyan/Documents/NetBeansProjects/ProyectoAlmacen/src/modelo/dto/kardex/Producto.java</file>
+            <file>file:/C:/Users/reyan/Documents/NetBeansProjects/ProyectoAlmacen/src/controller/ControllerTablaTransferencias.java</file>
+            <file>file:/C:/Users/reyan/Documents/NetBeansProjects/ProyectoAlmacen/src/modelo/dao/ProductoDao.java</file>
+        </group>
+    </open-files>
+</project-private>

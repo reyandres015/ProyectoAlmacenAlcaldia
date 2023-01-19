@@ -23,7 +23,7 @@ public class ProductoDao {
     private ArrayList<Transferencia> transferencias;
     private ObjectInputStream entrada;
     private ObjectOutputStream salida;
-    private String filePath = "C:\\Users\\reyan\\Documents\\NetBeansProjects\\ProyectoAlmacen\\Base de Datos\\productos\\productos.dat";
+    private String filePath = "C:\\Users\\reyan\\Documents\\NetBeansProjects\\ProyectoAlmacen\\BaseDatos\\productos\\productos.dat";
     
     public ProductoDao() {
         this.productos = new ArrayList<Producto>();
