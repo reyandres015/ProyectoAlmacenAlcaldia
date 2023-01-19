@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -18,6 +19,7 @@ public class ControllerTablaTransferencias implements ActionListener {
     private Producto producto;
     private ProductoDao modeloProducto;
     private DefaultTableModel modeloTabla;
+    DecimalFormat formato = new DecimalFormat("¤#,###");
 
     public ControllerTablaTransferencias(int i) {
         this.vistaTabla = new UITablaTransferencias();
@@ -52,7 +54,7 @@ public class ControllerTablaTransferencias implements ActionListener {
                 LocalDate fecha = v.getFecha();
                 DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG);
                 String formattedDate = fecha.format(formatter);
-                Object fila[] = {v.getItem(), formattedDate, v.getConcepto(), v.getMovimiento(), v.getCantidad(), v.getValorUnitario(), v.getValorTotal(), v.getCantidadTotal()};
+                Object fila[] = {v.getItem(), formattedDate, v.getConcepto(), v.getMovimiento(), v.getCantidad(), formato.format(v.getValorUnitario()), formato.format(v.getValorTotal()), v.getCantidadTotal()};
                 modeloTabla.addRow(fila);
             }
         }
