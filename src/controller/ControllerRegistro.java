@@ -25,10 +25,11 @@ public class ControllerRegistro implements ActionListener {
     private ProductoDao modelo;
     DecimalFormat formato = new DecimalFormat("¤#,###");
 
-    public ControllerRegistro(int i) {
+    public ControllerRegistro(int i, ProductoDao modelo) {
         this.vistaRegistro = new UIRegistro();
-        this.modelo = new ProductoDao();
-        this.producto = modelo.getProductos().get(i);
+        this.modelo = modelo;
+        this.modelo.initDatos();
+        this.producto = this.modelo.getProductos().get(i);
         this.vistaRegistro.realizarEntradaBtn.addActionListener(this);
         this.vistaRegistro.realizarSalidaBtn.addActionListener(this);
         this.vistaRegistro.setVisible(true);
@@ -48,7 +49,7 @@ public class ControllerRegistro implements ActionListener {
                     modelo.guardar();
                     producto.guardar();
                     JOptionPane.showMessageDialog(null, "Se ha registrado la entrada satisfactoriamente");
-                    ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem());
+                    ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem(), modelo);
                     vistaRegistro.dispose();
                 }
             } else {
@@ -67,7 +68,7 @@ public class ControllerRegistro implements ActionListener {
                     modelo.guardar();
                     producto.guardar();
                     JOptionPane.showMessageDialog(null, "Se ha registrado la salida satisfactoriamente");
-                    ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem());
+                    ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem(), modelo);
                     vistaRegistro.dispose();
 
                 } else {

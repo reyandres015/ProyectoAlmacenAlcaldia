@@ -40,7 +40,7 @@ public class ControllerIngresoBusquedaProducto implements ActionListener {
             if (modelo.ingresarProducto(producto)) {
                 JOptionPane.showMessageDialog(null, "Se ha ingresado el producto satisfactoriamente");
                 modelo.guardar();
-                ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem());
+                ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem(), modelo);
                 vista.dispose();
                 
             } else {
@@ -61,15 +61,13 @@ public class ControllerIngresoBusquedaProducto implements ActionListener {
                         JOptionPane.showMessageDialog(null, "No se ha encontrado el producto");
                     } else {
                         producto.initDatos();
-                        ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem());
+                        ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem(), modelo);
                         vista.dispose();
                     }
                 }
             } else {
                 producto.initDatos();
-                System.out.println(producto.getCantidadTotal());
-                ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem());
-                vista.dispose();
+                ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem(), modelo);
             }
 
         }

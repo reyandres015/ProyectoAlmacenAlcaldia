@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.dto.Transferencia;
@@ -19,23 +20,26 @@ import modelo.dto.kardex.Producto;
  * @author reyan
  */
 public class ProductoDao {
-    private ArrayList<Producto> productos;
+    private ArrayList<Producto> productos = new ArrayList<Producto>();
     private ArrayList<Transferencia> transferencias;
     private ObjectInputStream entrada;
     private ObjectOutputStream salida;
-    private String filePath = "C:\\Users\\reyan\\Documents\\NetBeansProjects\\ProyectoAlmacen\\BaseDatos\\productos\\productos.dat";
+    private String filePath = "C:\\Users\\reyan\\Documents\\NetBeansProjects\\ProyectoAlmacen\\BaseDatos\\productos\\productos" + LocalDate.now().getYear() + ".dat";
     
     public ProductoDao() {
-        this.productos = new ArrayList<Producto>();
+        initDatos();
+    }
+    
+    public void initDatos(){
         File file = new File(filePath);
         if (file.isFile()) {
             try {
                 this.entrada = new ObjectInputStream(new FileInputStream(filePath));
                 this.productos = (ArrayList<Producto>) (List<Producto>) entrada.readObject();
                 this.entrada.close();
+                System.out.println("Se leyo");
             } catch (Exception e) {
-                System.out.println(e.getMessage());
-                guardar();
+                System.out.println("no se leyo");
             }
         }
     }
@@ -45,8 +49,9 @@ public class ProductoDao {
             this.salida = new ObjectOutputStream(new FileOutputStream(filePath));
             this.salida.writeObject(productos);
             this.salida.close();
+            System.out.println("Se guardo");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("no se guardo");
         }
     }
     

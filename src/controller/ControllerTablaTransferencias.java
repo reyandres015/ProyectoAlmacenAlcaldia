@@ -21,10 +21,11 @@ public class ControllerTablaTransferencias implements ActionListener {
     private DefaultTableModel modeloTabla;
     DecimalFormat formato = new DecimalFormat("¤#,###");
 
-    public ControllerTablaTransferencias(int i) {
+    public ControllerTablaTransferencias(int i, ProductoDao modeloProducto) {
         this.vistaTabla = new UITablaTransferencias();
-        this.modeloProducto = new ProductoDao();
-        this.producto = modeloProducto.getProductos().get(i);
+        this.modeloProducto = modeloProducto;
+        this.modeloProducto.initDatos();
+        this.producto = this.modeloProducto.getProductos().get(i);
         this.modeloTabla = (DefaultTableModel) this.vistaTabla.tablaInformacionProducto.getModel();
         datosProducto();
         actualizarTabla();
@@ -62,7 +63,7 @@ public class ControllerTablaTransferencias implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(this.vistaTabla.ingresarRegistroBtn)) {
-            ControllerRegistro cR = new ControllerRegistro(this.producto.getItem());
+            ControllerRegistro cR = new ControllerRegistro(this.producto.getItem(), modeloProducto);
             vistaTabla.dispose();
         }
     }
