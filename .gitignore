@@ -1,2 +1,7 @@
 /BaseDatos/*
 *.png
+
+/build/*
+/dist/*
+/nbproject/*
+/test/*
