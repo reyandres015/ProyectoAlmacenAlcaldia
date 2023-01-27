@@ -12,14 +12,14 @@ public class InventarioProducto implements Serializable {
     private int cantidad;
     private long valorUnitario;
     private long valorTotal;
-    private int cantidadTotal;
+    private int cantidadDisponible;
 
     /**
      * @param item
      * @param fecha
      * @param concepto
      */
-    public InventarioProducto(int item, LocalDate fecha, String concepto, String movimiento, int cantidad, long valorUnitario, long valorTotal, int cantidadTotal) {
+    public InventarioProducto(int item, LocalDate fecha, String concepto, String movimiento, int cantidad, long valorUnitario, long valorTotal, int cantidadDisponible) {
         this.item = item;
         this.fecha = fecha;
         this.concepto = concepto;
@@ -27,7 +27,7 @@ public class InventarioProducto implements Serializable {
         this.cantidad = cantidad;
         this.valorUnitario = valorUnitario;
         this.valorTotal = valorTotal;
-        this.cantidadTotal = cantidadTotal;
+        this.cantidadDisponible = cantidadDisponible;
     }
 
     public LocalDate getFecha() {
@@ -58,8 +58,12 @@ public class InventarioProducto implements Serializable {
         return concepto;
     }
 
-    public int getCantidadTotal() {
-        return cantidadTotal;
+    public void setCantidadDisponible(int cantidadDisponible) {
+        this.cantidadDisponible = cantidadDisponible;
+    }
+
+    public int getCantidadDisponible() {
+        return cantidadDisponible;
     }
     
     

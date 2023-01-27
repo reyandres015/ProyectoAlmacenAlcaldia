@@ -31,22 +31,27 @@ public class ControllerIngresoBusquedaProducto implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(this.vista.ingresarBtn)) {
             String descripcion = vista.descripcionField.getText();
-            String referencia = vista.referenciaField.getText();
-            String ubicacion = vista.ubicacionField.getText();
-            String metodo = vista.metodoField.getText();
-            String proveedor = vista.proveedorField.getText();
-            Producto producto = new Producto(modelo.tamañoArreglo(), descripcion, referencia, ubicacion, metodo, proveedor);
-            System.out.println(modelo.tamañoArreglo());
-            if (modelo.ingresarProducto(producto)) {
-                JOptionPane.showMessageDialog(null, "Se ha ingresado el producto satisfactoriamente");
-                modelo.guardar();
-                ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem(), modelo);
-                vista.dispose();
-                
+            if (modelo.buscarProductoDescripcion(descripcion) != null) {
+                JOptionPane.showMessageDialog(null, "¡Ya existe un producto con la misma descripcion!");
             } else {
-                JOptionPane.showMessageDialog(null, "No ha sido posible ingresar el producto");
+                String referencia = vista.referenciaField.getText();
+                String ubicacion = vista.ubicacionField.getText();
+                String metodo = vista.metodoField.getText();
+                String proveedor = vista.proveedorField.getText();
+                Producto producto = new Producto(modelo.tamañoArreglo(), descripcion, referencia, ubicacion, metodo, proveedor);
+                if (descripcion.equalsIgnoreCase("") | referencia.equalsIgnoreCase("") | ubicacion.equalsIgnoreCase("") | metodo.equalsIgnoreCase("") | proveedor.equalsIgnoreCase("")) {
+                    JOptionPane.showMessageDialog(null, "Los datos del producto estan incompletos");
+                } else {
+                    if (modelo.ingresarProducto(producto)) {
+                        JOptionPane.showMessageDialog(null, "Se ha ingresado el producto satisfactoriamente");
+                        modelo.guardar();
+                        ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem(), modelo);
+                        vista.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No ha sido posible ingresar el producto");
+                    }
+                }
             }
-
         }
         if (e.getSource().equals(this.vista.buscarProductoBtn)) {
             String descripcion = vista.buscarDescripcionField.getText();
@@ -69,12 +74,9 @@ public class ControllerIngresoBusquedaProducto implements ActionListener {
                 producto.initDatos();
                 ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem(), modelo);
             }
-
         }
         if (e.getSource().equals(this.vista.catalogoProductoBtn)) {
-            
-        }
-        
-    }
 
+        }
+    }
 }

@@ -47,6 +47,8 @@ public class UITablaTransferencias extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         productoLabel = new javax.swing.JLabel();
         referenciaProducto = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        valorTotalLabel = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -71,7 +73,7 @@ public class UITablaTransferencias extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Item", "Fecha", "Detalle", "Movimiento", "Cantidad", "Valor Unitario", "Valor Total", "Cantidad Total"
+                "Item", "Fecha", "Detalle", "Movimiento", "Cantidad", "Valor Unitario", "Valor Total", "Cantidad Disponible"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -129,6 +131,10 @@ public class UITablaTransferencias extends javax.swing.JFrame {
 
         referenciaProducto.setText("jLabel8");
 
+        jLabel9.setText("Valor Total");
+
+        valorTotalLabel.setText("jLabel10");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -148,12 +154,16 @@ public class UITablaTransferencias extends javax.swing.JFrame {
                     .addComponent(referenciaProducto))
                 .addGap(108, 108, 108)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(ubicacionLabel))
-                .addGap(100, 100, 100)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(proveedorLabel)
-                    .addComponent(jLabel4))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(ubicacionLabel))
+                        .addGap(100, 100, 100)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(proveedorLabel)
+                            .addComponent(jLabel4)))
+                    .addComponent(jLabel9)
+                    .addComponent(valorTotalLabel))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -174,11 +184,13 @@ public class UITablaTransferencias extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cantidadTotalLabel)
-                    .addComponent(metodoLabel))
+                    .addComponent(metodoLabel)
+                    .addComponent(valorTotalLabel))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -288,6 +300,7 @@ public class UITablaTransferencias extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -299,5 +312,6 @@ public class UITablaTransferencias extends javax.swing.JFrame {
     public javax.swing.JLabel referenciaProducto;
     public javax.swing.JTable tablaInformacionProducto;
     public javax.swing.JLabel ubicacionLabel;
+    public javax.swing.JLabel valorTotalLabel;
     // End of variables declaration//GEN-END:variables
 }

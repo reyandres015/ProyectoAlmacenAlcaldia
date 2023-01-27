@@ -11,26 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Producto implements Serializable {
+
     private int item;
-    private String descripcion;
-    private String referencia;
-    private String ubicacion;
-    private String proveedor;
+    private final String descripcion;
+    private final String referencia;
+    private final String ubicacion;
+    private final String proveedor;
     private int cantidadTotal;
     private long valorTotal;
-    private String metodo;
-    private ArrayList<InventarioProducto> inventarios = new ArrayList<>() ;
+    private final String metodo;
+    private ArrayList<InventarioProducto> inventarios = new ArrayList<>();
     private ObjectInputStream entrada;
     private ObjectOutputStream salida;
-    private String filePath;
+    private final String filePath;
 
-    /**
-     * @param descripcion
-     * @param referencia
-     * @param ubicacion
-     * @param proveedor
-     * @param metodo
-     */
     public Producto(int item, String descripcion, String referencia, String ubicacion, String metodo, String proveedor) {
         super();
         this.item = item;
@@ -42,8 +36,8 @@ public class Producto implements Serializable {
         this.filePath = "C:\\Users\\reyan\\Documents\\NetBeansProjects\\ProyectoAlmacen\\BaseDatos\\inventarios\\inventario" + descripcion + ".dat";
         initDatos();
     }
-    
-    public void initDatos(){
+
+    public void initDatos() {
         File file = new File(filePath);
         if (file.isFile()) {
             try {
@@ -56,7 +50,7 @@ public class Producto implements Serializable {
             }
         }
     }
-    
+
     public void guardar() {
         try {
             this.salida = new ObjectOutputStream(new FileOutputStream(filePath));
@@ -66,7 +60,7 @@ public class Producto implements Serializable {
             System.out.println(e.getMessage());
         }
     }
-    
+
     public boolean crearRegistro(InventarioProducto inventario) {
         return inventarios.add(inventario);
     }
@@ -81,16 +75,17 @@ public class Producto implements Serializable {
     }
 
     public boolean entradaProducto(int cantidadEntrada, long valorTotalEntrada) {
-        this.cantidadTotal=(cantidadEntrada + this.cantidadTotal);
+        this.cantidadTotal = (cantidadEntrada + this.cantidadTotal);
         this.valorTotal = (this.valorTotal + valorTotalEntrada);
         return true;
     }
-    
-    public boolean salidaProducto(int cantidadSalida){
-        if((this.cantidadTotal - cantidadSalida)<0){
+
+    public boolean salidaProducto(int cantidadSalida, long valorTotalSalida) {
+        if ((this.cantidadTotal - cantidadSalida) < 0) {
             return false;
-        }else{
+        } else {
             this.cantidadTotal = this.cantidadTotal - cantidadSalida;
+            this.valorTotal = this.valorTotal - valorTotalSalida;
             return true;
         }
     }
@@ -98,7 +93,7 @@ public class Producto implements Serializable {
     public int getItem() {
         return item;
     }
-    
+
     public int getCantidadTotal() {
         return cantidadTotal;
     }
@@ -142,15 +137,8 @@ public class Producto implements Serializable {
     public void setItem(int item) {
         this.item = item;
     }
-    
-    public int tamañoArreglo(){
+
+    public int tamañoArreglo() {
         return inventarios.size();
     }
-    
-    
-    
-    
-    
-
-    
 }

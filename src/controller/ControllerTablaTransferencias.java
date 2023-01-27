@@ -41,6 +41,7 @@ public class ControllerTablaTransferencias implements ActionListener {
         vistaTabla.proveedorLabel.setText(producto.getProveedor());
         vistaTabla.cantidadTotalLabel.setText(String.valueOf(producto.getCantidadTotal()));
         vistaTabla.metodoLabel.setText(producto.getMetodo());
+        vistaTabla.valorTotalLabel.setText(String.valueOf(formato.format(producto.getValorTotal())));
     }
 
     public void actualizarTabla() {
@@ -55,7 +56,7 @@ public class ControllerTablaTransferencias implements ActionListener {
                 LocalDate fecha = v.getFecha();
                 DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG);
                 String formattedDate = fecha.format(formatter);
-                Object fila[] = {v.getItem(), formattedDate, v.getConcepto(), v.getMovimiento(), v.getCantidad(), formato.format(v.getValorUnitario()), formato.format(v.getValorTotal()), v.getCantidadTotal()};
+                Object fila[] = {v.getItem(), formattedDate, v.getConcepto(), v.getMovimiento(), v.getCantidad(), formato.format(v.getValorUnitario()), formato.format(v.getValorTotal()), v.getCantidadDisponible()};
                 modeloTabla.addRow(fila);
             }
         }
