@@ -65,15 +65,6 @@ public class Producto implements Serializable {
         return inventarios.add(inventario);
     }
 
-    public InventarioProducto busqueda(LocalDate fecha) {
-        for (int i = 0; i < inventarios.size(); i++) {
-            if ((inventarios.get(i).getFecha()) == fecha) {
-                return inventarios.get(i);
-            }
-        }
-        return null;
-    }
-
     public boolean entradaProducto(int cantidadEntrada, long valorTotalEntrada) {
         this.cantidadTotal = (cantidadEntrada + this.cantidadTotal);
         this.valorTotal = (this.valorTotal + valorTotalEntrada);

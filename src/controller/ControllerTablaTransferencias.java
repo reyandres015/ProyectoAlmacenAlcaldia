@@ -53,10 +53,7 @@ public class ControllerTablaTransferencias implements ActionListener {
             }
 
             for (InventarioProducto v : inventarios) {
-                LocalDate fecha = v.getFecha();
-                DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG);
-                String formattedDate = fecha.format(formatter);
-                Object fila[] = {v.getItem(), formattedDate, v.getConcepto(), v.getMovimiento(), v.getCantidad(), formato.format(v.getValorUnitario()), formato.format(v.getValorTotal()), v.getCantidadDisponible()};
+                Object fila[] = {v.getItem(), v.getFecha(), v.getConcepto(), v.getMovimiento(), v.getCantidad(), formato.format(v.getValorUnitario()), formato.format(v.getValorTotal()), v.getCantidadDisponible()};
                 modeloTabla.addRow(fila);
             }
         }

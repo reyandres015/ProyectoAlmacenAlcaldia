@@ -6,7 +6,7 @@ import java.time.LocalDate;
 public class InventarioProducto implements Serializable {
 
     private int item;
-    private LocalDate fecha;
+    private String fecha;
     private String concepto;
     private String movimiento;
     private int cantidad;
@@ -19,7 +19,7 @@ public class InventarioProducto implements Serializable {
      * @param fecha
      * @param concepto
      */
-    public InventarioProducto(int item, LocalDate fecha, String concepto, String movimiento, int cantidad, long valorUnitario, long valorTotal, int cantidadDisponible) {
+    public InventarioProducto(int item, String fecha, String concepto, String movimiento, int cantidad, long valorUnitario, long valorTotal, int cantidadDisponible) {
         this.item = item;
         this.fecha = fecha;
         this.concepto = concepto;
@@ -30,7 +30,7 @@ public class InventarioProducto implements Serializable {
         this.cantidadDisponible = cantidadDisponible;
     }
 
-    public LocalDate getFecha() {
+    public String getFecha() {
         return fecha;
     }
 

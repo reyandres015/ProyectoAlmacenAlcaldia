@@ -38,7 +38,7 @@ public class ControllerRegistro implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(this.vistaRegistro.realizarEntradaBtn)) {
-            LocalDate fecha = LocalDate.now();
+            String fecha = vistaRegistro.fechaEntradaField.getText();
             if (vistaRegistro.conceptoEntradaField.getText().equalsIgnoreCase("") | vistaRegistro.cantidadEntradaField.getText().equalsIgnoreCase("") | vistaRegistro.valorUnitarioEntradaField.getText().equalsIgnoreCase("")) {
                 JOptionPane.showMessageDialog(null, "Los datos del ingreso estan incompletos");
             } else {
@@ -94,7 +94,7 @@ public class ControllerRegistro implements ActionListener {
 
     public boolean generarSalidaOrdenLlegada(long valorUnitario, int cantidadSalida) {
         if (producto.salidaProducto(cantidadSalida, valorUnitario * cantidadSalida)) {
-            InventarioProducto ip = new InventarioProducto(producto.tamañoArreglo(), LocalDate.now(), vistaRegistro.conceptoSalidaField.getText(), "Salida", cantidadSalida, valorUnitario, cantidadSalida * valorUnitario, 0);
+            InventarioProducto ip = new InventarioProducto(producto.tamañoArreglo(), vistaRegistro.fechaSalidaField.getText(), vistaRegistro.conceptoSalidaField.getText(), "Salida", cantidadSalida, valorUnitario, cantidadSalida * valorUnitario, 0);
             if (producto.crearRegistro(ip)) {
                 return true;
 
