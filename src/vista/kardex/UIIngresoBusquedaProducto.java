@@ -42,7 +42,6 @@ public class UIIngresoBusquedaProducto extends javax.swing.JFrame {
         proveedorField = new javax.swing.JTextField();
         metodoField = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        catalogoProductoBtn = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         buscarDescripcionField = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -50,6 +49,8 @@ public class UIIngresoBusquedaProducto extends javax.swing.JFrame {
         buscarProductoBtn = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaProductos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -134,8 +135,6 @@ public class UIIngresoBusquedaProducto extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Busqueda de Productos"));
 
-        catalogoProductoBtn.setText("Catalogo de Productos");
-
         jLabel8.setText("Ingrese el producto que desea buscar: ");
 
         jLabel9.setText("Ingrese la referencia del producto a buscar:");
@@ -149,7 +148,6 @@ public class UIIngresoBusquedaProducto extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(catalogoProductoBtn)
                     .addComponent(buscarProductoBtn)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,15 +172,26 @@ public class UIIngresoBusquedaProducto extends javax.swing.JFrame {
                     .addComponent(buscarReferenciaField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(buscarProductoBtn)
-                .addGap(18, 18, 18)
-                .addComponent(catalogoProductoBtn)
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addContainerGap(148, Short.MAX_VALUE))
         );
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/Cabezal.png"))); // NOI18N
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/Footer.png"))); // NOI18N
         jLabel6.setAutoscrolls(true);
+
+        tablaProductos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Item", "Descripción", "Referencia", "Ubicacion", "Proveedor", "Cantidad Total", "Valor Total"
+            }
+        ));
+        jScrollPane1.setViewportView(tablaProductos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -193,15 +202,19 @@ public class UIIngresoBusquedaProducto extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addGap(83, 83, 83))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(98, 98, 98)
+                        .addComponent(jLabel6)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addGap(101, 101, 101))
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,8 +226,10 @@ public class UIIngresoBusquedaProducto extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel6)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -267,7 +282,6 @@ public class UIIngresoBusquedaProducto extends javax.swing.JFrame {
     public javax.swing.JTextField buscarDescripcionField;
     public javax.swing.JButton buscarProductoBtn;
     public javax.swing.JTextField buscarReferenciaField;
-    public javax.swing.JButton catalogoProductoBtn;
     public javax.swing.JTextField descripcionField;
     public javax.swing.JButton ingresarBtn;
     private javax.swing.JLabel jLabel1;
@@ -281,9 +295,11 @@ public class UIIngresoBusquedaProducto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTextField metodoField;
     public javax.swing.JTextField proveedorField;
     public javax.swing.JTextField referenciaField;
+    public javax.swing.JTable tablaProductos;
     public javax.swing.JTextField ubicacionField;
     // End of variables declaration//GEN-END:variables
 }

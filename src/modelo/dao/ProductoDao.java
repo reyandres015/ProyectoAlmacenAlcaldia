@@ -37,7 +37,6 @@ public class ProductoDao {
                 this.entrada = new ObjectInputStream(new FileInputStream(filePath));
                 this.productos = (ArrayList<Producto>) (List<Producto>) entrada.readObject();
                 this.entrada.close();
-                System.out.println("Se leyo");
             } catch (Exception e) {
                 System.out.println("no se leyo");
             }
@@ -49,7 +48,6 @@ public class ProductoDao {
             this.salida = new ObjectOutputStream(new FileOutputStream(filePath));
             this.salida.writeObject(productos);
             this.salida.close();
-            System.out.println("Se guardo");
         } catch (Exception e) {
             System.out.println("no se guardo");
         }

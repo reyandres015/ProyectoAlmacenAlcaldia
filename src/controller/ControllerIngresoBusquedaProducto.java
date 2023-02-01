@@ -6,9 +6,14 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import modelo.dto.kardex.Producto;
 import modelo.dao.ProductoDao;
+import modelo.dto.kardex.InventarioProducto;
 import vista.kardex.UIIngresoBusquedaProducto;
 
 /**
@@ -19,12 +24,16 @@ public class ControllerIngresoBusquedaProducto implements ActionListener {
 
     UIIngresoBusquedaProducto vista;
     ProductoDao modelo;
+    private DefaultTableModel modeloTabla;
+    DecimalFormat formato = new DecimalFormat("¤#,###");
 
     public ControllerIngresoBusquedaProducto(UIIngresoBusquedaProducto vista) {
         this.vista = vista;
         this.modelo = new ProductoDao();
         this.vista.ingresarBtn.addActionListener(this);
         this.vista.buscarProductoBtn.addActionListener(this);
+        this.modeloTabla = (DefaultTableModel) this.vista.tablaProductos.getModel();
+        actualizarTabla();
         this.vista.setVisible(true);
     }
 
@@ -75,8 +84,19 @@ public class ControllerIngresoBusquedaProducto implements ActionListener {
                 ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem(), modelo);
             }
         }
-        if (e.getSource().equals(this.vista.catalogoProductoBtn)) {
+    }
+    public void actualizarTabla() {
+        ArrayList<Producto> productos = modelo.getProductos();
+        if (productos != null) {
+            int filas = modeloTabla.getRowCount();
+            for (int i = 0; filas > i; i++) {
+                modeloTabla.removeRow(0);
+            }
 
+            for (Producto v : productos) {
+                Object fila[] = {v.getItem(), v.getDescripcion(), v.getReferencia(), v.getUbicacion(), v.getProveedor(), v.getCantidadTotal(), formato.format(v.getValorTotal())};
+                modeloTabla.addRow(fila);
+            }
         }
     }
 }
