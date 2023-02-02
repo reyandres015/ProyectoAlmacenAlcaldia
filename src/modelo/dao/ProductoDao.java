@@ -24,7 +24,7 @@ public class ProductoDao {
     private ArrayList<Transferencia> transferencias;
     private ObjectInputStream entrada;
     private ObjectOutputStream salida;
-    private String filePath = "C:\\Users\\reyan\\Documents\\NetBeansProjects\\ProyectoAlmacen\\BaseDatos\\productos\\productos" + LocalDate.now().getYear() + ".dat";
+    private String filePath = System.getProperty("user.dir") + "\\BaseDatos\\productos\\productos" + LocalDate.now().getYear() + ".dat";
     
     public ProductoDao() {
         initDatos();

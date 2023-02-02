@@ -33,7 +33,7 @@ public class Producto implements Serializable {
         this.ubicacion = ubicacion;
         this.proveedor = proveedor;
         this.metodo = metodo;
-        this.filePath = "C:\\Users\\reyan\\Documents\\NetBeansProjects\\ProyectoAlmacen\\BaseDatos\\inventarios\\inventario" + descripcion + ".dat";
+        this.filePath = "\\BaseDatos\\inventarios\\inventario" + descripcion + ".dat";
         initDatos();
     }
 
