@@ -1,8 +1,10 @@
 package modelo.dto.kardex;
 
+import FileSave.FileSave;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -10,7 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Producto implements Serializable {
+public class Producto extends FileSave implements Serializable {
 
     private int item;
     private final String descripcion;
@@ -21,11 +23,9 @@ public class Producto implements Serializable {
     private long valorTotal;
     private final String metodo;
     private ArrayList<InventarioProducto> inventarios = new ArrayList<>();
-    private ObjectInputStream entrada;
-    private ObjectOutputStream salida;
-    private final String filePath;
+    private final String filePath = fileOrigin + fileSeparator + "Contratos.dat";
 
-    public Producto(int item, String descripcion, String referencia, String ubicacion, String metodo, String proveedor) {
+    public Producto(int item, String descripcion, String referencia, String ubicacion, String metodo, String proveedor) throws IOException {
         super();
         this.item = item;
         this.descripcion = descripcion;
@@ -33,7 +33,6 @@ public class Producto implements Serializable {
         this.ubicacion = ubicacion;
         this.proveedor = proveedor;
         this.metodo = metodo;
-        this.filePath = "\\BaseDatos\\inventarios\\inventario" + descripcion + ".dat";
         initDatos();
     }
 

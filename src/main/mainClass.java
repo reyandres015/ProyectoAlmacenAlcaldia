@@ -4,15 +4,16 @@
  */
 package main;
 
-import controller.ControllerPrincipal;
-import vista.UIPrincipal;
+import controller.ControllerIngresoContratos;
+import java.io.IOException;
+import vista.kardex.UIIngresoContratos;
 
 /**
  *
  * @author reyan
  */
 public class mainClass {
-    public static void main(String[] args) {
-        ControllerPrincipal cp = new ControllerPrincipal();
+    public static void main(String[] args) throws IOException {
+        ControllerIngresoContratos cp = new ControllerIngresoContratos();
     }
 }

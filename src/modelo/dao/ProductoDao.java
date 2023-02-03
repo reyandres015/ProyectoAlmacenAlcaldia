@@ -4,9 +4,11 @@
  */
 package modelo.dao;
 
+import FileSave.FileSave;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDate;
@@ -19,14 +21,13 @@ import modelo.dto.kardex.Producto;
  *
  * @author reyan
  */
-public class ProductoDao {
+public class ProductoDao extends FileSave{
     private ArrayList<Producto> productos = new ArrayList<Producto>();
     private ArrayList<Transferencia> transferencias;
-    private ObjectInputStream entrada;
-    private ObjectOutputStream salida;
-    private String filePath = System.getProperty("user.dir") + "\\BaseDatos\\productos\\productos" + LocalDate.now().getYear() + ".dat";
+    private String filePath = fileOrigin + fileSeparator + "Producto" + productos.size() + ".dat";
     
-    public ProductoDao() {
+    public ProductoDao() throws IOException {
+        super();
         initDatos();
     }
     
