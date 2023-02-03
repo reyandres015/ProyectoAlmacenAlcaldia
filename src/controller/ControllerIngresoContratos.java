@@ -7,12 +7,15 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import modelo.dao.ContratoDao;
 import modelo.dto.Persona;
 import modelo.dto.kardex.Contrato;
+import modelo.dto.kardex.Producto;
 import modelo.dto.kardex.Proveedor;
 import vista.kardex.UIIngresoContratos;
 
@@ -23,13 +26,32 @@ public class ControllerIngresoContratos implements ActionListener {
 
     private final UIIngresoContratos vista;
     private final ContratoDao modelo;
+    private DefaultTableModel modeloTabla;
 
     public ControllerIngresoContratos() throws IOException {
         this.vista = new UIIngresoContratos();
         this.modelo = new ContratoDao();
         this.vista.ingresarContratoBtn.addActionListener(this);
         this.vista.buscarProveedorBtn.addActionListener(this);
+        this.modeloTabla = (DefaultTableModel) this.vista.tablaContratos.getModel();
+        actualizarTabla();
+        
         this.vista.setVisible(true);
+    }
+    
+    public void actualizarTabla() {
+        ArrayList<Contrato> contratos = modelo.getContratos();
+        if (contratos != null) {
+            int filas = modeloTabla.getRowCount();
+            for (int i = 0; filas > i; i++) {
+                modeloTabla.removeRow(0);
+            }
+
+            for (Contrato v : contratos) {
+                Object fila[] = {v.getFecha(), v.getReferencia(), v.getObjeto(), v.getProveedor().getEmpresa()};
+                modeloTabla.addRow(fila);
+            }
+        }
     }
 
     /**
@@ -70,9 +92,15 @@ public class ControllerIngresoContratos implements ActionListener {
             if (vista.fechaEntradaField.getText().equalsIgnoreCase("") | vista.objetoField.getText().equalsIgnoreCase("") | vista.conceptoField.getText().equalsIgnoreCase("") | vista.empresaField.getText().equalsIgnoreCase("") | vista.identificacionProveedor.getText().equalsIgnoreCase("") | vista.nombreRepreField.getText().equalsIgnoreCase("") | vista.identificacionRepreField.getText().equalsIgnoreCase("") | vista.celularRepre.getText().equalsIgnoreCase("") | vista.direcionRepre.getText().equalsIgnoreCase("") | vista.correoRepre.getText().equalsIgnoreCase("")) {
                 JOptionPane.showMessageDialog(null, "Los datos del ingreso estan incompletos");
             } else {
-                modelo.ingresarContrato(new Contrato(vista.fechaEntradaField.getText(), vista.objetoField.getText(), vista.conceptoField.getText(), new Proveedor(vista.empresaField.getText(), Integer.parseInt(vista.identificacionProveedor.getText()), new Persona(vista.nombreRepreField.getText(), vista.identificacionRepreField.getText(), vista.celularRepre.getText(), vista.direcionRepre.getText(), vista.correoRepre.getText()))));
                 try {
-                    ControllerIngresoBusquedaProducto ck = new ControllerIngresoBusquedaProducto(this.modelo, modelo.getContratos().size() - 1);
+                    if (modelo.ingresarContrato(new Contrato(vista.fechaEntradaField.getText(), vista.objetoField.getText(), vista.conceptoField.getText(), new Proveedor(vista.empresaField.getText(), Integer.parseInt(vista.identificacionProveedor.getText()), new Persona(vista.nombreRepreField.getText(), vista.identificacionRepreField.getText(), vista.celularRepre.getText(), vista.direcionRepre.getText(), vista.correoRepre.getText()))))) {
+                        JOptionPane.showMessageDialog(null, "Se ha ingresado correctamente el contrato");
+                        actualizarTabla();
+                        modelo.guardar();
+                        ControllerIngresoBusquedaProducto ck = new ControllerIngresoBusquedaProducto(this.modelo, modelo.getContratos().size() - 1);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No ha sido posible ingresar el contrato");
+                    }
                 } catch (IOException ex) {
                     Logger.getLogger(ControllerIngresoContratos.class.getName()).log(Level.SEVERE, null, ex);
                 }

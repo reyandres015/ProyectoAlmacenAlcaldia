@@ -15,9 +15,15 @@ public class InventarioProducto implements Serializable {
     private int cantidadDisponible;
 
     /**
+     *
      * @param item
      * @param fecha
      * @param concepto
+     * @param movimiento
+     * @param cantidad
+     * @param valorUnitario
+     * @param valorTotal
+     * @param cantidadDisponible
      */
     public InventarioProducto(int item, String fecha, String concepto, String movimiento, int cantidad, long valorUnitario, long valorTotal, int cantidadDisponible) {
         this.item = item;

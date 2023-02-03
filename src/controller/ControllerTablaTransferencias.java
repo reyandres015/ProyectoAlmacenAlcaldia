@@ -8,7 +8,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import modelo.dao.ProductoDao;
 import modelo.dto.kardex.*;
 import vista.kardex.UITablaTransferencias;
 
@@ -17,15 +16,15 @@ public class ControllerTablaTransferencias implements ActionListener {
     private UITablaTransferencias vistaTabla;
 
     private Producto producto;
-    private ProductoDao modeloProducto;
+    private Contrato contrato;
     private DefaultTableModel modeloTabla;
     DecimalFormat formato = new DecimalFormat("¤#,###");
 
-    public ControllerTablaTransferencias(int i, ProductoDao modeloProducto) {
+    public ControllerTablaTransferencias(int i, Contrato contrato) {
         this.vistaTabla = new UITablaTransferencias();
-        this.modeloProducto = modeloProducto;
-        this.modeloProducto.initDatos();
-        this.producto = this.modeloProducto.getProductos().get(i);
+        this.contrato = contrato;
+        this.contrato.initDatos();
+        this.producto = this.contrato.getProductos().get(i);
         this.modeloTabla = (DefaultTableModel) this.vistaTabla.tablaInformacionProducto.getModel();
         datosProducto();
         actualizarTabla();
@@ -61,7 +60,7 @@ public class ControllerTablaTransferencias implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(this.vistaTabla.ingresarRegistroBtn)) {
-            ControllerRegistro cR = new ControllerRegistro(this.producto.getItem(), modeloProducto);
+            ControllerRegistro cR = new ControllerRegistro(this.producto.getItem(), contrato);
             vistaTabla.dispose();
         }
     }

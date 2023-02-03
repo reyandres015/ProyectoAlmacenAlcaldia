@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.dao.*;
+import modelo.dto.kardex.Contrato;
 import modelo.dto.kardex.InventarioProducto;
 import modelo.dto.kardex.Producto;
 import vista.kardex.UIRegistro;
@@ -23,14 +24,14 @@ public class ControllerRegistro implements ActionListener {
 
     private UIRegistro vistaRegistro;
     private Producto producto;
-    private ProductoDao modelo;
+    private Contrato contrato;
     DecimalFormat formato = new DecimalFormat("¤#,###");
 
-    public ControllerRegistro(int i, ProductoDao modelo) {
+    public ControllerRegistro(int i, Contrato contrato) {
         this.vistaRegistro = new UIRegistro();
-        this.modelo = modelo;
-        this.modelo.initDatos();
-        this.producto = this.modelo.getProductos().get(i);
+        this.contrato = contrato;
+        this.contrato.initDatos();
+        this.producto = this.contrato.getProductos().get(i);
         this.vistaRegistro.realizarEntradaBtn.addActionListener(this);
         this.vistaRegistro.realizarSalidaBtn.addActionListener(this);
         this.vistaRegistro.setVisible(true);
@@ -50,10 +51,10 @@ public class ControllerRegistro implements ActionListener {
                 if (producto.entradaProducto(cantidadEntrada, valorTotalEntrada)) {
                     InventarioProducto ip = new InventarioProducto(producto.tamañoArreglo(), fecha, conceptoEntrada, "Entrada", cantidadEntrada, valorUnitarioEntrada, valorTotalEntrada, cantidadEntrada);
                     if (producto.crearRegistro(ip)) {
-                        modelo.guardar();
+                        contrato.guardar();
                         producto.guardar();
                         JOptionPane.showMessageDialog(null, "Se ha registrado la entrada satisfactoriamente");
-                        ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem(), modelo);
+                        ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem(), contrato);
                         vistaRegistro.dispose();
                     }
                 } else {
@@ -80,10 +81,10 @@ public class ControllerRegistro implements ActionListener {
                     } else {
                         inventarios.get(i).setCantidadDisponible(inventarios.get(i).getCantidadDisponible() - restante);
                         generarSalidaOrdenLlegada(inventarios.get(i).getValorUnitario(), restante);
-                        modelo.guardar();
+                        contrato.guardar();
                         producto.guardar();
                         JOptionPane.showMessageDialog(null, "Se ha registrado la salida satisfactoriamente");
-                        ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem(), modelo);
+                        ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem(), contrato);
                         vistaRegistro.dispose();
                         break;
                     }

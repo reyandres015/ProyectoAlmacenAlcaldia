@@ -23,7 +23,7 @@ public class Producto extends FileSave implements Serializable {
     private long valorTotal;
     private final String metodo;
     private ArrayList<InventarioProducto> inventarios = new ArrayList<>();
-    private final String filePath = fileOrigin + fileSeparator + "Contratos.dat";
+    private final String filePath;
 
     public Producto(int item, String descripcion, String referencia, String ubicacion, String metodo, String proveedor) throws IOException {
         super();
@@ -33,6 +33,7 @@ public class Producto extends FileSave implements Serializable {
         this.ubicacion = ubicacion;
         this.proveedor = proveedor;
         this.metodo = metodo;
+        this.filePath = fileOrigin + fileSeparator + "Inventarios" + fileSeparator + "inventario" + descripcion + ".dat";
         initDatos();
     }
 

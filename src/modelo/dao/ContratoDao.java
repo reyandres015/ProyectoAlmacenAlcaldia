@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ import modelo.dto.kardex.Proveedor;
  *
  * @author reyan
  */
-public class ContratoDao extends FileSave{
+public class ContratoDao extends FileSave implements Serializable{
 
     private ArrayList<Contrato> contratos = new ArrayList<>();
     private String filePath = fileOrigin + fileSeparator + "Contratos.dat";
@@ -34,14 +35,15 @@ public class ContratoDao extends FileSave{
     }
 
     public void initDatos() {
-        
         File file = new File(filePath);
         if (file.isFile()) {
             try {
                 this.entrada = new ObjectInputStream(new FileInputStream(filePath));
                 this.contratos = (ArrayList<Contrato>) (List<Contrato>) entrada.readObject();
                 this.entrada.close();
+                System.out.println("Se leyo");
             } catch (Exception e) {
+                System.out.println(e);
                 System.out.println("no se leyo");
             }
         }
@@ -52,6 +54,7 @@ public class ContratoDao extends FileSave{
             this.salida = new ObjectOutputStream(new FileOutputStream(filePath));
             this.salida.writeObject(contratos);
             this.salida.close();
+            System.out.println("Se guardo");
         } catch (Exception e) {
             System.out.println("no se guardo");
         }
@@ -61,9 +64,9 @@ public class ContratoDao extends FileSave{
         return contratos.add(c);
     }
 
-    public Contrato buscarContratoConcepto(String concepto) {
+    public Contrato buscarContratoConcepto(String referencia) {
         for (int i = 0; i < contratos.size(); i++) {
-            if (contratos.get(i).getConcepto().equals(concepto)) {
+            if (contratos.get(i).getReferencia().equals(referencia)) {
                 return contratos.get(i);
             }
         }

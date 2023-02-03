@@ -4,13 +4,14 @@
  */
 package modelo.dto.kardex;
 
+import java.io.Serializable;
 import modelo.dto.Persona;
 
 /**
  *
  * @author reyan
  */
-public class Proveedor {
+public class Proveedor implements Serializable{
 
     private String empresa;
     private int documento;
