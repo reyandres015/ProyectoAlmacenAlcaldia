@@ -18,6 +18,7 @@ import modelo.dto.kardex.Contrato;
 import modelo.dto.kardex.Producto;
 import modelo.dto.kardex.Proveedor;
 import vista.kardex.UIIngresoContratos;
+import vista.kardex.VentanaTablaContratos;
 
 /**
  * @author reyan
@@ -26,32 +27,15 @@ public class ControllerIngresoContratos implements ActionListener {
 
     private final UIIngresoContratos vista;
     private final ContratoDao modelo;
-    private DefaultTableModel modeloTabla;
 
     public ControllerIngresoContratos() throws IOException {
         this.vista = new UIIngresoContratos();
         this.modelo = new ContratoDao();
         this.vista.ingresarContratoBtn.addActionListener(this);
         this.vista.buscarProveedorBtn.addActionListener(this);
-        this.modeloTabla = (DefaultTableModel) this.vista.tablaContratos.getModel();
-        actualizarTabla();
+        this.vista.contratosBtn.addActionListener(this);
         
         this.vista.setVisible(true);
-    }
-    
-    public void actualizarTabla() {
-        ArrayList<Contrato> contratos = modelo.getContratos();
-        if (contratos != null) {
-            int filas = modeloTabla.getRowCount();
-            for (int i = 0; filas > i; i++) {
-                modeloTabla.removeRow(0);
-            }
-
-            for (Contrato v : contratos) {
-                Object fila[] = {v.getFecha(), v.getReferencia(), v.getObjeto(), v.getProveedor().getEmpresa()};
-                modeloTabla.addRow(fila);
-            }
-        }
     }
 
     /**
@@ -95,7 +79,6 @@ public class ControllerIngresoContratos implements ActionListener {
                 try {
                     if (modelo.ingresarContrato(new Contrato(vista.fechaEntradaField.getText(), vista.objetoField.getText(), vista.conceptoField.getText(), new Proveedor(vista.empresaField.getText(), Integer.parseInt(vista.identificacionProveedor.getText()), new Persona(vista.nombreRepreField.getText(), vista.identificacionRepreField.getText(), vista.celularRepre.getText(), vista.direcionRepre.getText(), vista.correoRepre.getText()))))) {
                         JOptionPane.showMessageDialog(null, "Se ha ingresado correctamente el contrato");
-                        actualizarTabla();
                         modelo.guardar();
                         ControllerIngresoBusquedaProducto ck = new ControllerIngresoBusquedaProducto(this.modelo, modelo.getContratos().size() - 1);
                     } else {
@@ -105,6 +88,11 @@ public class ControllerIngresoContratos implements ActionListener {
                     Logger.getLogger(ControllerIngresoContratos.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+        }
+        
+        if (e.getSource().equals(this.vista.contratosBtn)) {
+            VentanaTablaContratos cp = new VentanaTablaContratos();
+            cp.setVisible(true);
         }
     }
 }
