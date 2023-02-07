@@ -32,6 +32,7 @@ public class ControllerIngresoBusquedaProducto implements ActionListener {
     public ControllerIngresoBusquedaProducto(ContratoDao modeloContrato, int i) throws IOException {
         this.vista = new UIIngresoBusquedaProducto();
         this.contrato = modeloContrato.getContratos().get(i);
+        contrato.initDatos();
         this.vista.ingresarBtn.addActionListener(this);
         this.vista.buscarProductoBtn.addActionListener(this);
         this.modeloTabla = (DefaultTableModel) this.vista.tablaProductos.getModel();
@@ -58,6 +59,7 @@ public class ControllerIngresoBusquedaProducto implements ActionListener {
                         if (contrato.ingresarProducto(producto)) {
                             JOptionPane.showMessageDialog(null, "Se ha ingresado el producto satisfactoriamente");
                             contrato.guardar();
+                            
                             ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem(), contrato);
                             vista.dispose();
                         } else {
@@ -96,6 +98,7 @@ public class ControllerIngresoBusquedaProducto implements ActionListener {
         ArrayList<Producto> productos = contrato.getProductos();
         if (productos != null) {
             int filas = modeloTabla.getRowCount();
+            System.out.println("arreglo productos vacio");
             for (int i = 0; filas > i; i++) {
                 modeloTabla.removeRow(0);
             }

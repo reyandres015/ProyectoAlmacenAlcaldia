@@ -12,13 +12,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.dto.Persona;
 import modelo.dto.kardex.Contrato;
-import modelo.dto.kardex.Producto;
-import modelo.dto.kardex.Proveedor;
 
 /**
  *
@@ -64,7 +61,7 @@ public class ContratoDao extends FileSave implements Serializable{
         return contratos.add(c);
     }
 
-    public Contrato buscarContratoConcepto(String referencia) {
+    public Contrato buscarContratoReferencia(String referencia) {
         for (int i = 0; i < contratos.size(); i++) {
             if (contratos.get(i).getReferencia().equals(referencia)) {
                 return contratos.get(i);

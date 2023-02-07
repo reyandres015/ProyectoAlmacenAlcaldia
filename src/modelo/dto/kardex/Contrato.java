@@ -19,20 +19,22 @@ import java.util.List;
  *
  * @author reyan
  */
-public class Contrato extends FileSave implements Serializable{
+public class Contrato extends FileSave implements Serializable {
 
     private String fecha;
     private String referencia;
     private String objeto;
     private Proveedor proveedor;
+    private long valorTotal;
     private ArrayList<Producto> productos = new ArrayList<Producto>();
     private String filePath;
 
-    public Contrato(String fecha, String objeto, String referencia, Proveedor proveedor) throws IOException {
+    public Contrato(String fecha, String objeto, String referencia, Proveedor proveedor, long valorTotal) throws IOException {
         this.fecha = fecha;
         this.objeto = objeto;
         this.referencia = referencia;
         this.proveedor = proveedor;
+        this.valorTotal = valorTotal;
         this.filePath = fileOrigin + fileSeparator + "Productos" + fileSeparator + "Productos" + this.referencia + ".dat";
         initDatos();
     }
@@ -44,6 +46,7 @@ public class Contrato extends FileSave implements Serializable{
                 this.entrada = new ObjectInputStream(new FileInputStream(filePath));
                 this.productos = (ArrayList<Producto>) (List<Producto>) entrada.readObject();
                 this.entrada.close();
+                System.out.println("se leyo");
             } catch (Exception e) {
                 System.out.println("no se leyo");
             }
@@ -55,6 +58,7 @@ public class Contrato extends FileSave implements Serializable{
             this.salida = new ObjectOutputStream(new FileOutputStream(filePath));
             this.salida.writeObject(productos);
             this.salida.close();
+            System.out.println("se guardo");
         } catch (Exception e) {
             System.out.println("no se guardo");
         }
@@ -104,6 +108,10 @@ public class Contrato extends FileSave implements Serializable{
 
     public Proveedor getProveedor() {
         return proveedor;
+    }
+
+    public long getValorTotal() {
+        return valorTotal;
     }
 
 }

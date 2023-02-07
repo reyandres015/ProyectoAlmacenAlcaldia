@@ -15,7 +15,6 @@ import javax.swing.table.DefaultTableModel;
 import modelo.dao.ContratoDao;
 import modelo.dto.Persona;
 import modelo.dto.kardex.Contrato;
-import modelo.dto.kardex.Producto;
 import modelo.dto.kardex.Proveedor;
 import vista.kardex.UIIngresoContratos;
 import vista.kardex.VentanaTablaContratos;
@@ -34,7 +33,7 @@ public class ControllerIngresoContratos implements ActionListener {
         this.vista.ingresarContratoBtn.addActionListener(this);
         this.vista.buscarProveedorBtn.addActionListener(this);
         this.vista.contratosBtn.addActionListener(this);
-        
+
         this.vista.setVisible(true);
     }
 
@@ -77,7 +76,7 @@ public class ControllerIngresoContratos implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Los datos del ingreso estan incompletos");
             } else {
                 try {
-                    if (modelo.ingresarContrato(new Contrato(vista.fechaEntradaField.getText(), vista.objetoField.getText(), vista.conceptoField.getText(), new Proveedor(vista.empresaField.getText(), Integer.parseInt(vista.identificacionProveedor.getText()), new Persona(vista.nombreRepreField.getText(), vista.identificacionRepreField.getText(), vista.celularRepre.getText(), vista.direcionRepre.getText(), vista.correoRepre.getText()))))) {
+                    if (modelo.ingresarContrato(new Contrato(vista.fechaEntradaField.getText(), vista.objetoField.getText(), vista.conceptoField.getText(), new Proveedor(vista.empresaField.getText(), Integer.parseInt(vista.identificacionProveedor.getText()), new Persona(vista.nombreRepreField.getText(), vista.identificacionRepreField.getText(), vista.celularRepre.getText(), vista.direcionRepre.getText(), vista.correoRepre.getText())), Integer.valueOf(vista.valorContrato.getText())))) {
                         JOptionPane.showMessageDialog(null, "Se ha ingresado correctamente el contrato");
                         modelo.guardar();
                         ControllerIngresoBusquedaProducto ck = new ControllerIngresoBusquedaProducto(this.modelo, modelo.getContratos().size() - 1);
@@ -89,10 +88,15 @@ public class ControllerIngresoContratos implements ActionListener {
                 }
             }
         }
-        
+
         if (e.getSource().equals(this.vista.contratosBtn)) {
-            VentanaTablaContratos cp = new VentanaTablaContratos();
-            cp.setVisible(true);
+            VentanaTablaContratos cp;
+            try {
+                cp = new VentanaTablaContratos();
+                cp.setVisible(true);
+            } catch (IOException ex) {
+                Logger.getLogger(ControllerIngresoContratos.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }
