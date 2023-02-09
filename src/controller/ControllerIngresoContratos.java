@@ -18,6 +18,7 @@ import modelo.dto.kardex.Contrato;
 import modelo.dto.kardex.Proveedor;
 import vista.kardex.UIIngresoContratos;
 import vista.kardex.VentanaTablaContratos;
+import vista.kardex.VentanaTablaProductos;
 
 /**
  * @author reyan
@@ -79,6 +80,7 @@ public class ControllerIngresoContratos implements ActionListener {
                     if (modelo.ingresarContrato(new Contrato(vista.fechaEntradaField.getText(), vista.objetoField.getText(), vista.conceptoField.getText(), new Proveedor(vista.empresaField.getText(), Integer.parseInt(vista.identificacionProveedor.getText()), new Persona(vista.nombreRepreField.getText(), vista.identificacionRepreField.getText(), vista.celularRepre.getText(), vista.direcionRepre.getText(), vista.correoRepre.getText())), Integer.valueOf(vista.valorContrato.getText())))) {
                         JOptionPane.showMessageDialog(null, "Se ha ingresado correctamente el contrato");
                         modelo.guardar();
+                        vista.dispose();
                         ControllerIngresoBusquedaProducto ck = new ControllerIngresoBusquedaProducto(this.modelo, modelo.getContratos().size() - 1);
                     } else {
                         JOptionPane.showMessageDialog(null, "No ha sido posible ingresar el contrato");
@@ -94,6 +96,7 @@ public class ControllerIngresoContratos implements ActionListener {
             try {
                 cp = new VentanaTablaContratos();
                 cp.setVisible(true);
+                vista.dispose();
             } catch (IOException ex) {
                 Logger.getLogger(ControllerIngresoContratos.class.getName()).log(Level.SEVERE, null, ex);
             }

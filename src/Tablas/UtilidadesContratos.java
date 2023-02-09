@@ -1,6 +1,6 @@
-package utilidades;
+package Tablas;
 
-public class Utilidades {
+public class UtilidadesContratos {
 
     public static final int FECHA = 0;
     public static final int OBJETO = 1;

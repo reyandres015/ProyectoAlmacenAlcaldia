@@ -17,6 +17,8 @@ import modelo.dao.ContratoDao;
 import modelo.dto.kardex.Producto;
 import modelo.dto.kardex.Contrato;
 import vista.kardex.UIIngresoBusquedaProducto;
+import vista.kardex.VentanaTablaContratos;
+import vista.kardex.VentanaTablaProductos;
 
 /**
  *
@@ -35,8 +37,7 @@ public class ControllerIngresoBusquedaProducto implements ActionListener {
         contrato.initDatos();
         this.vista.ingresarBtn.addActionListener(this);
         this.vista.buscarProductoBtn.addActionListener(this);
-        this.modeloTabla = (DefaultTableModel) this.vista.tablaProductos.getModel();
-        actualizarTabla();
+        this.vista.productosBtn.addActionListener(this);
         this.vista.setVisible(true);
     }
 
@@ -52,14 +53,14 @@ public class ControllerIngresoBusquedaProducto implements ActionListener {
                 String proveedor = vista.proveedorField.getText();
                 Producto producto;
                 try {
-                    producto = new Producto(contrato.tamañoArreglo(), descripcion, referencia, ubicacion, metodo, proveedor);
+                    producto = new Producto(contrato.tamañoArreglo(), descripcion, referencia, ubicacion, metodo, contrato.getProveedor());
                     if (descripcion.equalsIgnoreCase("") | referencia.equalsIgnoreCase("") | ubicacion.equalsIgnoreCase("") | metodo.equalsIgnoreCase("") | proveedor.equalsIgnoreCase("")) {
                         JOptionPane.showMessageDialog(null, "Los datos del producto estan incompletos");
                     } else {
                         if (contrato.ingresarProducto(producto)) {
                             JOptionPane.showMessageDialog(null, "Se ha ingresado el producto satisfactoriamente");
                             contrato.guardar();
-                            
+
                             ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem(), contrato);
                             vista.dispose();
                         } else {
@@ -93,19 +94,13 @@ public class ControllerIngresoBusquedaProducto implements ActionListener {
                 ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem(), contrato);
             }
         }
-    }
-    public void actualizarTabla() {
-        ArrayList<Producto> productos = contrato.getProductos();
-        if (productos != null) {
-            int filas = modeloTabla.getRowCount();
-            System.out.println("arreglo productos vacio");
-            for (int i = 0; filas > i; i++) {
-                modeloTabla.removeRow(0);
-            }
-
-            for (Producto v : productos) {
-                Object fila[] = {v.getItem(), v.getDescripcion(), v.getReferencia(), v.getUbicacion(), v.getProveedor(), v.getCantidadTotal(), formato.format(v.getValorTotal())};
-                modeloTabla.addRow(fila);
+        if (e.getSource().equals(this.vista.productosBtn)) {
+            VentanaTablaProductos cp;
+            try {
+                cp = new VentanaTablaProductos(contrato);
+                cp.setVisible(true);
+            } catch (IOException ex) {
+                Logger.getLogger(ControllerIngresoContratos.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

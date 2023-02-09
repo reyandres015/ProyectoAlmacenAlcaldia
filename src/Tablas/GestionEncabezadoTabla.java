@@ -1,4 +1,4 @@
-package utilidades;
+package Tablas;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -11,7 +11,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.TableCellRenderer;
 
 /**
- * Permite personalizar el encabezado de la tabla para definir el color que tendrá en las 
+ * Permite personalizar el encabezado de la tabla para definir el color que tendrï¿½ en las 
  * columnas
  * @author CHENAO
  *

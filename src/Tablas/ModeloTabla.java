@@ -1,4 +1,4 @@
-package utilidades;
+package Tablas;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -26,7 +26,7 @@ public class ModeloTabla extends DefaultTableModel {
 
     public boolean isCellEditable(int row, int column) {
         //Definimos si una celda puede ser o no editable
-        if (column != Utilidades.PERFIL && column != Utilidades.EVENTO) {
+        if (column != UtilidadesContratos.PERFIL && column != UtilidadesContratos.EVENTO) {
             return false;
         } else {
             return true;

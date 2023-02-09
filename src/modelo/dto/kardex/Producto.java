@@ -18,14 +18,14 @@ public class Producto extends FileSave implements Serializable {
     private final String descripcion;
     private final String referencia;
     private final String ubicacion;
-    private final String proveedor;
+    private final Proveedor proveedor;
     private int cantidadTotal;
     private long valorTotal;
     private final String metodo;
     private ArrayList<InventarioProducto> inventarios = new ArrayList<>();
     private final String filePath;
 
-    public Producto(int item, String descripcion, String referencia, String ubicacion, String metodo, String proveedor) throws IOException {
+    public Producto(int item, String descripcion, String referencia, String ubicacion, String metodo, Proveedor proveedor) throws IOException {
         super();
         this.item = item;
         this.descripcion = descripcion;
@@ -113,7 +113,7 @@ public class Producto extends FileSave implements Serializable {
         return ubicacion;
     }
 
-    public String getProveedor() {
+    public Proveedor getProveedor() {
         return proveedor;
     }
 

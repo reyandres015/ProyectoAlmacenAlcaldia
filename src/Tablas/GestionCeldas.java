@@ -1,4 +1,4 @@
-package utilidades;
+package Tablas;
 
 import java.awt.Color;
 import java.awt.Component;

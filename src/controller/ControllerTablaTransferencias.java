@@ -37,7 +37,7 @@ public class ControllerTablaTransferencias implements ActionListener {
         vistaTabla.productoLabel.setText(producto.getDescripcion());
         vistaTabla.referenciaProducto.setText(producto.getReferencia());
         vistaTabla.ubicacionLabel.setText(producto.getUbicacion());
-        vistaTabla.proveedorLabel.setText(producto.getProveedor());
+        vistaTabla.proveedorLabel.setText(producto.getProveedor().getEmpresa());
         vistaTabla.cantidadTotalLabel.setText(String.valueOf(producto.getCantidadTotal()));
         vistaTabla.metodoLabel.setText(producto.getMetodo());
         vistaTabla.valorTotalLabel.setText(String.valueOf(formato.format(producto.getValorTotal())));
