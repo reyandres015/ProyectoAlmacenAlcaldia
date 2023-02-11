@@ -7,18 +7,15 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import modelo.dao.ContratoDao;
 import modelo.dto.Persona;
 import modelo.dto.kardex.Contrato;
 import modelo.dto.kardex.Proveedor;
 import vista.kardex.UIIngresoContratos;
 import vista.kardex.VentanaTablaContratos;
-import vista.kardex.VentanaTablaProductos;
 
 /**
  * @author reyan
@@ -28,9 +25,9 @@ public class ControllerIngresoContratos implements ActionListener {
     private final UIIngresoContratos vista;
     private final ContratoDao modelo;
 
-    public ControllerIngresoContratos() throws IOException {
+    public ControllerIngresoContratos(ContratoDao modelo) throws IOException {
         this.vista = new UIIngresoContratos();
-        this.modelo = new ContratoDao();
+        this.modelo = modelo;
         this.vista.ingresarContratoBtn.addActionListener(this);
         this.vista.buscarProveedorBtn.addActionListener(this);
         this.vista.contratosBtn.addActionListener(this);
@@ -58,7 +55,7 @@ public class ControllerIngresoContratos implements ActionListener {
             } else if (vista.identificacionProveedor.getText().equalsIgnoreCase("")) {
                 JOptionPane.showMessageDialog(null, "No se ha encontrado el proveedor");
             } else {
-                int id = Integer.parseInt(vista.identificacionProveedor.getText());
+                String id = vista.identificacionProveedor.getText();
                 persona = modelo.buscarProveedores(id);
                 if (persona == null) {
                     JOptionPane.showMessageDialog(null, "No se ha encontrado el proveedor");
@@ -77,7 +74,7 @@ public class ControllerIngresoContratos implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Los datos del ingreso estan incompletos");
             } else {
                 try {
-                    if (modelo.ingresarContrato(new Contrato(vista.fechaEntradaField.getText(), vista.objetoField.getText(), vista.conceptoField.getText(), new Proveedor(vista.empresaField.getText(), Integer.parseInt(vista.identificacionProveedor.getText()), new Persona(vista.nombreRepreField.getText(), vista.identificacionRepreField.getText(), vista.celularRepre.getText(), vista.direcionRepre.getText(), vista.correoRepre.getText())), Integer.valueOf(vista.valorContrato.getText())))) {
+                    if (modelo.ingresarContrato(new Contrato(vista.fechaEntradaField.getText(), vista.objetoField.getText(), vista.conceptoField.getText(), new Proveedor(vista.empresaField.getText(), vista.identificacionProveedor.getText(), new Persona(vista.nombreRepreField.getText(), vista.identificacionRepreField.getText(), vista.celularRepre.getText(), vista.direcionRepre.getText(), vista.correoRepre.getText())), Integer.valueOf(vista.valorContrato.getText())))) {
                         JOptionPane.showMessageDialog(null, "Se ha ingresado correctamente el contrato");
                         modelo.guardar();
                         vista.dispose();
@@ -92,11 +89,9 @@ public class ControllerIngresoContratos implements ActionListener {
         }
 
         if (e.getSource().equals(this.vista.contratosBtn)) {
-            VentanaTablaContratos cp;
             try {
-                cp = new VentanaTablaContratos();
+                VentanaTablaContratos cp = new VentanaTablaContratos();
                 cp.setVisible(true);
-                vista.dispose();
             } catch (IOException ex) {
                 Logger.getLogger(ControllerIngresoContratos.class.getName()).log(Level.SEVERE, null, ex);
             }

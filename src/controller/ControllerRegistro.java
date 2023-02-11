@@ -7,10 +7,8 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import modelo.dao.*;
 import modelo.dto.kardex.Contrato;
 import modelo.dto.kardex.InventarioProducto;
 import modelo.dto.kardex.Producto;
@@ -22,7 +20,7 @@ import vista.kardex.UIRegistro;
  */
 public class ControllerRegistro implements ActionListener {
 
-    private UIRegistro vistaRegistro;
+    private final UIRegistro vistaRegistro;
     private Producto producto;
     private Contrato contrato;
     DecimalFormat formato = new DecimalFormat("¤#,###");
@@ -37,6 +35,7 @@ public class ControllerRegistro implements ActionListener {
         this.vistaRegistro.setVisible(true);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(this.vistaRegistro.realizarEntradaBtn)) {
             String fecha = vistaRegistro.fechaEntradaField.getText();
@@ -44,8 +43,8 @@ public class ControllerRegistro implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Los datos del ingreso estan incompletos");
             } else {
                 String conceptoEntrada = vistaRegistro.conceptoEntradaField.getText();
-                int cantidadEntrada = Integer.valueOf(vistaRegistro.cantidadEntradaField.getText());
-                long valorUnitarioEntrada = Integer.valueOf(vistaRegistro.valorUnitarioEntradaField.getText());
+                int cantidadEntrada = Integer.parseInt(vistaRegistro.cantidadEntradaField.getText());
+                long valorUnitarioEntrada = Integer.parseInt(vistaRegistro.valorUnitarioEntradaField.getText());
                 long valorTotalEntrada = cantidadEntrada * valorUnitarioEntrada;
                 vistaRegistro.valorTotalEntradaLabel.setText(String.valueOf(formato.format(valorTotalEntrada)));
                 if (producto.entradaProducto(cantidadEntrada, valorTotalEntrada)) {

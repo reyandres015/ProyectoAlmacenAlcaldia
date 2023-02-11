@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -17,7 +16,6 @@ import modelo.dao.ContratoDao;
 import modelo.dto.kardex.Producto;
 import modelo.dto.kardex.Contrato;
 import vista.kardex.UIIngresoBusquedaProducto;
-import vista.kardex.VentanaTablaContratos;
 import vista.kardex.VentanaTablaProductos;
 
 /**
@@ -26,9 +24,8 @@ import vista.kardex.VentanaTablaProductos;
  */
 public class ControllerIngresoBusquedaProducto implements ActionListener {
 
-    private UIIngresoBusquedaProducto vista;
+    private final UIIngresoBusquedaProducto vista;
     private Contrato contrato;
-    private DefaultTableModel modeloTabla;
     DecimalFormat formato = new DecimalFormat("¤#,###");
 
     public ControllerIngresoBusquedaProducto(ContratoDao modeloContrato, int i) throws IOException {
@@ -62,7 +59,6 @@ public class ControllerIngresoBusquedaProducto implements ActionListener {
                             contrato.guardar();
 
                             ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem(), contrato);
-                            vista.dispose();
                         } else {
                             JOptionPane.showMessageDialog(null, "No ha sido posible ingresar el producto");
                         }
@@ -95,9 +91,8 @@ public class ControllerIngresoBusquedaProducto implements ActionListener {
             }
         }
         if (e.getSource().equals(this.vista.productosBtn)) {
-            VentanaTablaProductos cp;
             try {
-                cp = new VentanaTablaProductos(contrato);
+                VentanaTablaProductos cp = new VentanaTablaProductos(contrato.getProductos());
                 cp.setVisible(true);
             } catch (IOException ex) {
                 Logger.getLogger(ControllerIngresoContratos.class.getName()).log(Level.SEVERE, null, ex);

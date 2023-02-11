@@ -22,6 +22,7 @@ import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,6 +37,7 @@ public class VentanaTablaContratos extends JFrame implements MouseListener {
     private JPanel contentPane;
     private JScrollPane scrollPaneTabla;
     private JTable tablaContratos;
+    DecimalFormat formato = new DecimalFormat("¤#,###");
     ArrayList<Contrato> listaPersonas;//lista que simula la informaci�n de la BD
 
     ModeloTabla modelo;//modelo definido en la clase ModeloTabla
@@ -95,7 +97,6 @@ public class VentanaTablaContratos extends JFrame implements MouseListener {
         titulosList.add("Celular");
         titulosList.add("Valor Total");
         titulosList.add(" ");
-        titulosList.add(" ");
 
         //se asignan las columnas al arreglo para enviarse al momento de construir la tabla
         String titulos[] = new String[titulosList.size()];
@@ -144,10 +145,9 @@ public class VentanaTablaContratos extends JFrame implements MouseListener {
             informacion[x][UtilidadesContratos.REFERENCIA] = listaPersonas.get(x).getReferencia() + "";
             informacion[x][UtilidadesContratos.EMPRESA] = listaPersonas.get(x).getProveedor().getEmpresa() + "";
             informacion[x][UtilidadesContratos.CELULAR] = listaPersonas.get(x).getProveedor().getRepresentanteLegal().getCelular() + "";
-            informacion[x][UtilidadesContratos.VALORTOTAL] = listaPersonas.get(x).getValorTotal() + "";
+            informacion[x][UtilidadesContratos.VALORTOTAL] = formato.format(listaPersonas.get(x).getValorTotal()) + "";
             //se asignan las plabras clave para que en la clase GestionCeldas se use para asignar el icono correspondiente
             informacion[x][UtilidadesContratos.PERFIL] = "PERFIL";
-            informacion[x][UtilidadesContratos.EVENTO] = "EVENTO";
         }
 
         return informacion;
@@ -172,10 +172,9 @@ public class VentanaTablaContratos extends JFrame implements MouseListener {
         //se asigna el tipo de dato que tendr�n las celdas de cada columna definida respectivamente para validar su personalizaci�n
         tablaContratos.getColumnModel().getColumn(UtilidadesContratos.VALORTOTAL).setCellRenderer(new GestionCeldas("numerico"));
         tablaContratos.getColumnModel().getColumn(UtilidadesContratos.PERFIL).setCellRenderer(new GestionCeldas("icono"));
-        tablaContratos.getColumnModel().getColumn(UtilidadesContratos.EVENTO).setCellRenderer(new GestionCeldas("icono"));
 
         //se recorre y asigna el resto de celdas que serian las que almacenen datos de tipo texto
-        for (int i = 0; i < titulos.length - 3; i++) {//se resta 7 porque las ultimas 7 columnas se definen arriba
+        for (int i = 0; i < titulos.length - 2; i++) {//se resta 7 porque las ultimas 7 columnas se definen arriba
             tablaContratos.getColumnModel().getColumn(i).setCellRenderer(new GestionCeldas("texto"));
         }
 
@@ -183,14 +182,13 @@ public class VentanaTablaContratos extends JFrame implements MouseListener {
         tablaContratos.setRowHeight(25);//tama�o de las celdas
         tablaContratos.setGridColor(new java.awt.Color(0, 0, 0));
         //Se define el tama�o de largo para cada columna y su contenido
-        tablaContratos.getColumnModel().getColumn(UtilidadesContratos.FECHA).setPreferredWidth(130);//fecha
+        tablaContratos.getColumnModel().getColumn(UtilidadesContratos.FECHA).setPreferredWidth(250);//fecha
         tablaContratos.getColumnModel().getColumn(UtilidadesContratos.OBJETO).setPreferredWidth(380);//objetoContrato
         tablaContratos.getColumnModel().getColumn(UtilidadesContratos.REFERENCIA).setPreferredWidth(350);//referenciaContrato
-        tablaContratos.getColumnModel().getColumn(UtilidadesContratos.EMPRESA).setPreferredWidth(130);//nombreEmpresa
+        tablaContratos.getColumnModel().getColumn(UtilidadesContratos.EMPRESA).setPreferredWidth(280);//nombreEmpresa
         tablaContratos.getColumnModel().getColumn(UtilidadesContratos.CELULAR).setPreferredWidth(280);//celularEmpresa
-        tablaContratos.getColumnModel().getColumn(UtilidadesContratos.VALORTOTAL).setPreferredWidth(80);//valortotal
+        tablaContratos.getColumnModel().getColumn(UtilidadesContratos.VALORTOTAL).setPreferredWidth(150);//valortotal
         tablaContratos.getColumnModel().getColumn(UtilidadesContratos.PERFIL).setPreferredWidth(30);//accion perfil
-        tablaContratos.getColumnModel().getColumn(UtilidadesContratos.EVENTO).setPreferredWidth(30);//accion evento
 
         //personaliza el encabezado
         JTableHeader jtableHeader = tablaContratos.getTableHeader();
@@ -218,8 +216,6 @@ public class VentanaTablaContratos extends JFrame implements MouseListener {
             } catch (IOException ex) {
                 Logger.getLogger(VentanaTablaContratos.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (columna == UtilidadesContratos.EVENTO) {//se valida que sea la columna del otro evento
-            JOptionPane.showMessageDialog(null, "Evento del otro icono");
         }
 
     }
@@ -237,6 +233,7 @@ public class VentanaTablaContratos extends JFrame implements MouseListener {
         ContratoDao miContrato = new ContratoDao();
         Contrato contrato = miContrato.buscarContratoReferencia(tablaContratos.getValueAt(fila, UtilidadesContratos.REFERENCIA).toString());
         ControllerIngresoBusquedaProducto cI = new ControllerIngresoBusquedaProducto(miContrato, miContrato.getContratos().indexOf(contrato));
+        dispose();
     }
 
     //estos metododos pueden ser usados dependiendo de nuestra necesidad, por ejemplo para cambiar el tama�o del icono al ser presionado

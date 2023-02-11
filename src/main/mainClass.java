@@ -4,9 +4,8 @@
  */
 package main;
 
-import controller.ControllerIngresoContratos;
+import controller.ControllerPrincipal;
 import java.io.IOException;
-import vista.kardex.UIIngresoContratos;
 
 /**
  *
@@ -14,6 +13,6 @@ import vista.kardex.UIIngresoContratos;
  */
 public class mainClass {
     public static void main(String[] args) throws IOException {
-        ControllerIngresoContratos cp = new ControllerIngresoContratos();
+        ControllerPrincipal cp = new ControllerPrincipal();
     }
 }

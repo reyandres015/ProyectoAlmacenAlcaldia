@@ -16,12 +16,12 @@ import Tablas.UtilidadesProductos;
 import controller.ControllerTablaTransferencias;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,14 +42,16 @@ public class VentanaTablaProductos extends JFrame implements MouseListener {
     private int filasTabla;
     private int columnasTabla;
     private Contrato contrato;
+    DecimalFormat formato = new DecimalFormat("¤#,###");
 
     /**
      * Create the frame.
      *
+     * @param listaProductos
      * @throws java.io.IOException
      */
-    public VentanaTablaProductos(Contrato contrato) throws IOException {
-        this.contrato = contrato;
+    public VentanaTablaProductos(ArrayList<Producto> listaProductos) throws IOException {
+        this.listaProductos = listaProductos;
         setSize(1121, 453);
 
         iniciarComponentes();
@@ -86,8 +88,6 @@ public class VentanaTablaProductos extends JFrame implements MouseListener {
      * columnas y luego se asigna la informaci�n
      */
     private void construirTabla() throws IOException {
-        listaProductos = contrato.getProductos();
-
         ArrayList<String> titulosList = new ArrayList<>();
 
         titulosList.add("Item");
@@ -97,7 +97,6 @@ public class VentanaTablaProductos extends JFrame implements MouseListener {
         titulosList.add("Proveedor");
         titulosList.add("Cantidad Total");
         titulosList.add("Valor Total");
-        titulosList.add(" ");
         titulosList.add(" ");
 
         //se asignan las columnas al arreglo para enviarse al momento de construir la tabla
@@ -137,10 +136,9 @@ public class VentanaTablaProductos extends JFrame implements MouseListener {
             informacion[x][UtilidadesProductos.UBICACION] = listaProductos.get(x).getProveedor().getEmpresa() + "";
             informacion[x][UtilidadesProductos.PROVEEDOR] = listaProductos.get(x).getProveedor().getRepresentanteLegal().getCelular() + "";
             informacion[x][UtilidadesProductos.CANTIDADTOTAL] = listaProductos.get(x).getValorTotal() + "";
-            informacion[x][UtilidadesProductos.VALORTOTAL] = listaProductos.get(x).getValorTotal() + "";
+            informacion[x][UtilidadesProductos.VALORTOTAL] = formato.format(listaProductos.get(x).getValorTotal()) + "";
             //se asignan las plabras clave para que en la clase GestionCeldas se use para asignar el icono correspondiente
             informacion[x][UtilidadesProductos.PERFIL] = "PERFIL";
-            informacion[x][UtilidadesProductos.EVENTO] = "EVENTO";
         }
 
         return informacion;
@@ -165,10 +163,9 @@ public class VentanaTablaProductos extends JFrame implements MouseListener {
         //se asigna el tipo de dato que tendr�n las celdas de cada columna definida respectivamente para validar su personalizaci�n
         tablaProductos.getColumnModel().getColumn(UtilidadesProductos.VALORTOTAL).setCellRenderer(new GestionCeldas("numerico"));
         tablaProductos.getColumnModel().getColumn(UtilidadesProductos.PERFIL).setCellRenderer(new GestionCeldas("icono"));
-        tablaProductos.getColumnModel().getColumn(UtilidadesProductos.EVENTO).setCellRenderer(new GestionCeldas("icono"));
 
         //se recorre y asigna el resto de celdas que serian las que almacenen datos de tipo texto
-        for (int i = 0; i < titulos.length - 3; i++) {//se resta 7 porque las ultimas 7 columnas se definen arriba
+        for (int i = 0; i < titulos.length - 2; i++) {//se resta 7 porque las ultimas 7 columnas se definen arriba
             tablaProductos.getColumnModel().getColumn(i).setCellRenderer(new GestionCeldas("texto"));
         }
 
@@ -176,14 +173,13 @@ public class VentanaTablaProductos extends JFrame implements MouseListener {
         tablaProductos.setRowHeight(25);//tama�o de las celdas
         tablaProductos.setGridColor(new java.awt.Color(0, 0, 0));
         //Se define el tama�o de largo para cada columna y su contenido
-        tablaProductos.getColumnModel().getColumn(UtilidadesProductos.ITEM).setPreferredWidth(130);//fecha
+        tablaProductos.getColumnModel().getColumn(UtilidadesProductos.ITEM).setPreferredWidth(50);//fecha
         tablaProductos.getColumnModel().getColumn(UtilidadesProductos.DESCRIPCION).setPreferredWidth(380);//objetoContrato
         tablaProductos.getColumnModel().getColumn(UtilidadesProductos.REFERENCIA).setPreferredWidth(350);//referenciaContrato
         tablaProductos.getColumnModel().getColumn(UtilidadesProductos.UBICACION).setPreferredWidth(130);//nombreEmpresa
         tablaProductos.getColumnModel().getColumn(UtilidadesProductos.PROVEEDOR).setPreferredWidth(280);//celularEmpresa
         tablaProductos.getColumnModel().getColumn(UtilidadesProductos.VALORTOTAL).setPreferredWidth(80);//valortotal
         tablaProductos.getColumnModel().getColumn(UtilidadesProductos.PERFIL).setPreferredWidth(30);//accion perfil
-        tablaProductos.getColumnModel().getColumn(UtilidadesProductos.EVENTO).setPreferredWidth(30);//accion evento
 
         //personaliza el encabezado
         JTableHeader jtableHeader = tablaProductos.getTableHeader();
@@ -211,8 +207,6 @@ public class VentanaTablaProductos extends JFrame implements MouseListener {
             } catch (IOException ex) {
                 Logger.getLogger(VentanaTablaProductos.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (columna == UtilidadesProductos.EVENTO) {//se valida que sea la columna del otro evento
-            JOptionPane.showMessageDialog(null, "Evento del otro icono");
         }
 
     }

@@ -14,10 +14,10 @@ import modelo.dto.Persona;
 public class Proveedor implements Serializable{
 
     private String empresa;
-    private int documento;
+    private String documento;
     private Persona representanteLegal;
 
-    public Proveedor(String empresa, int documento, Persona representanteLegal) {
+    public Proveedor(String empresa, String documento, Persona representanteLegal) {
         this.empresa = empresa;
         this.documento = documento;
         this.representanteLegal = representanteLegal;
@@ -27,7 +27,7 @@ public class Proveedor implements Serializable{
         return empresa;
     }
 
-    public int getDocumento() {
+    public String getDocumento() {
         return documento;
     }
 

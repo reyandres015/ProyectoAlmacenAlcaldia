@@ -21,11 +21,11 @@ import modelo.dto.kardex.Contrato;
  *
  * @author reyan
  */
-public class ContratoDao extends FileSave implements Serializable{
+public class ContratoDao extends FileSave implements Serializable {
 
     private ArrayList<Contrato> contratos = new ArrayList<>();
     private String filePath = fileOrigin + fileSeparator + "Contratos.dat";
-    
+
     public ContratoDao() throws IOException {
         super();
         initDatos();
@@ -74,14 +74,7 @@ public class ContratoDao extends FileSave implements Serializable{
         for (Contrato contrato : contratos) {
             if (contrato.getProveedor().getEmpresa().equals(empresa)) {
                 return contrato.getProveedor().getRepresentanteLegal();
-            }
-        }
-        return null;
-    }
-
-    public Persona buscarProveedores(int documento) {
-        for (Contrato contrato : contratos) {
-            if (contrato.getProveedor().getDocumento() == documento) {
+            } else if (contrato.getProveedor().getDocumento().equals(empresa)) {
                 return contrato.getProveedor().getRepresentanteLegal();
             }
         }
