@@ -221,9 +221,9 @@ public class VentanaTablaProductos extends JFrame implements MouseListener {
         UtilidadesProductos.filaSeleccionada = fila;
 
         //teniendo la fila entonces se obtiene el objeto correspondiente para enviarse como parammetro o imprimir la informaci�n
-        Producto producto = contrato.buscarProductoDescripcion(tablaProductos.getValueAt(fila, UtilidadesProductos.DESCRIPCION).toString());
+        Producto producto = contrato.getModeloProductos().buscarProductoDescripcion(tablaProductos.getValueAt(fila, UtilidadesProductos.DESCRIPCION).toString());
         producto.initDatos();
-        ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem(), contrato);
+        ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto);
         
     }
 

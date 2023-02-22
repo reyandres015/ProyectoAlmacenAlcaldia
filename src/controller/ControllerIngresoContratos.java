@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import modelo.dao.ContratoDao;
+import modelo.dao.*;
 import modelo.dto.Persona;
 import modelo.dto.kardex.Contrato;
 import modelo.dto.kardex.Proveedor;
@@ -23,11 +23,13 @@ import vista.kardex.VentanaTablaContratos;
 public class ControllerIngresoContratos implements ActionListener {
 
     private final UIIngresoContratos vista;
-    private final ContratoDao modelo;
+    private final ContratoDao modeloContrato;
+    private final ProductoDao modeloTotalProductos;
 
-    public ControllerIngresoContratos(ContratoDao modelo) throws IOException {
+    public ControllerIngresoContratos(ContratoDao modeloContrato, ProductoDao modeloTotalProductos) throws IOException {
         this.vista = new UIIngresoContratos();
-        this.modelo = modelo;
+        this.modeloContrato = modeloContrato;
+        this.modeloTotalProductos = modeloTotalProductos;
         this.vista.ingresarContratoBtn.addActionListener(this);
         this.vista.buscarProveedorBtn.addActionListener(this);
         this.vista.contratosBtn.addActionListener(this);
@@ -43,7 +45,7 @@ public class ControllerIngresoContratos implements ActionListener {
         if (e.getSource().equals(this.vista.buscarProveedorBtn)) {
             String empresa = vista.empresaField.getText();
 
-            Persona persona = modelo.buscarProveedores(empresa);
+            Persona persona = modeloContrato.buscarProveedores(empresa);
 
             if (persona != null) {
                 JOptionPane.showMessageDialog(null, "Se ha encontrado el proveedor");
@@ -56,7 +58,7 @@ public class ControllerIngresoContratos implements ActionListener {
                 JOptionPane.showMessageDialog(null, "No se ha encontrado el proveedor");
             } else {
                 String id = vista.identificacionProveedor.getText();
-                persona = modelo.buscarProveedores(id);
+                persona = modeloContrato.buscarProveedores(id);
                 if (persona == null) {
                     JOptionPane.showMessageDialog(null, "No se ha encontrado el proveedor");
                 } else {
@@ -74,11 +76,12 @@ public class ControllerIngresoContratos implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Los datos del ingreso estan incompletos");
             } else {
                 try {
-                    if (modelo.ingresarContrato(new Contrato(vista.fechaEntradaField.getText(), vista.objetoField.getText(), vista.conceptoField.getText(), new Proveedor(vista.empresaField.getText(), vista.identificacionProveedor.getText(), new Persona(vista.nombreRepreField.getText(), vista.identificacionRepreField.getText(), vista.celularRepre.getText(), vista.direcionRepre.getText(), vista.correoRepre.getText())), Integer.valueOf(vista.valorContrato.getText())))) {
+                    Contrato c = new Contrato(vista.fechaEntradaField.getText(), vista.objetoField.getText(), vista.conceptoField.getText(), new Proveedor(vista.empresaField.getText(), vista.identificacionProveedor.getText(), new Persona(vista.nombreRepreField.getText(), vista.identificacionRepreField.getText(), vista.celularRepre.getText(), vista.direcionRepre.getText(), vista.correoRepre.getText())), Integer.valueOf(vista.valorContrato.getText()), modeloTotalProductos);
+                    if (modeloContrato.ingresarContrato(c)) {
                         JOptionPane.showMessageDialog(null, "Se ha ingresado correctamente el contrato");
-                        modelo.guardar();
+                        modeloContrato.guardar();
                         vista.dispose();
-                        ControllerIngresoBusquedaProducto ck = new ControllerIngresoBusquedaProducto(this.modelo, modelo.getContratos().size() - 1);
+                        ControllerIngresoBusquedaProducto ck = new ControllerIngresoBusquedaProducto(c);
                     } else {
                         JOptionPane.showMessageDialog(null, "No ha sido posible ingresar el contrato");
                     }

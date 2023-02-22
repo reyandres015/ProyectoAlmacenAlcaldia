@@ -24,7 +24,7 @@ import modelo.dto.kardex.Contrato;
 public class ContratoDao extends FileSave implements Serializable {
 
     private ArrayList<Contrato> contratos = new ArrayList<>();
-    private String filePath = fileOrigin + fileSeparator + "Contratos.dat";
+    private final String filePath = fileOrigin + fileSeparator + "Contratos.dat";
 
     public ContratoDao() throws IOException {
         super();
@@ -39,7 +39,7 @@ public class ContratoDao extends FileSave implements Serializable {
                 this.contratos = (ArrayList<Contrato>) (List<Contrato>) entrada.readObject();
                 this.entrada.close();
                 System.out.println("Se leyo");
-            } catch (Exception e) {
+            } catch (IOException | ClassNotFoundException e) {
                 System.out.println(e);
                 System.out.println("no se leyo");
             }
@@ -52,7 +52,7 @@ public class ContratoDao extends FileSave implements Serializable {
             this.salida.writeObject(contratos);
             this.salida.close();
             System.out.println("Se guardo");
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("no se guardo");
         }
     }

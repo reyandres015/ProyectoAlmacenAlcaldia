@@ -4,94 +4,32 @@
  */
 package modelo.dto.kardex;
 
-import FileSave.FileSave;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import modelo.dao.ProductoDao;
 
 /**
  *
  * @author reyan
  */
-public class Contrato extends FileSave implements Serializable {
+public class Contrato implements Serializable {
 
-    private String fecha;
-    private String referencia;
-    private String objeto;
-    private Proveedor proveedor;
-    private long valorTotal;
-    private ArrayList<Producto> productos = new ArrayList<Producto>();
-    private String filePath;
+    private final String fecha;
+    private final String referencia;
+    private final String objeto;
+    private final Proveedor proveedor;
+    private final long valorTotal;
+    private ProductoDao modeloProductos;
+    private static ProductoDao modeloTotalProductos;
 
-    public Contrato(String fecha, String objeto, String referencia, Proveedor proveedor, long valorTotal) throws IOException {
+    public Contrato(String fecha, String objeto, String referencia, Proveedor proveedor, long valorTotal, ProductoDao modeloTotalProductos) throws IOException{
         this.fecha = fecha;
         this.objeto = objeto;
         this.referencia = referencia;
         this.proveedor = proveedor;
         this.valorTotal = valorTotal;
-        this.filePath = fileOrigin + fileSeparator + "Productos" + fileSeparator + "Productos" + this.referencia + ".dat";
-        initDatos();
-    }
-
-    public void initDatos() {
-        File file = new File(filePath);
-        if (file.isFile()) {
-            try {
-                this.entrada = new ObjectInputStream(new FileInputStream(filePath));
-                this.productos = (ArrayList<Producto>) (List<Producto>) entrada.readObject();
-                this.entrada.close();
-                System.out.println("se leyo");
-            } catch (Exception e) {
-                System.out.println("no se leyo");
-            }
-        }
-    }
-
-    public void guardar() {
-        try {
-            this.salida = new ObjectOutputStream(new FileOutputStream(filePath));
-            this.salida.writeObject(productos);
-            this.salida.close();
-            System.out.println("se guardo");
-        } catch (Exception e) {
-            System.out.println("no se guardo");
-        }
-    }
-
-    public boolean ingresarProducto(Producto producto) {
-        return productos.add(producto);
-    }
-
-    public Producto buscarProductoDescripcion(String descripcion) {
-        for (int i = 0; i < productos.size(); i++) {
-            if (productos.get(i).getDescripcion().equals(descripcion)) {
-                return productos.get(i);
-            }
-        }
-        return null;
-    }
-
-    public Producto buscarProductoReferencia(String referencia) {
-        for (int i = 0; i < productos.size(); i++) {
-            if (productos.get(i).getReferencia().equals(referencia)) {
-                return productos.get(i);
-            }
-        }
-        return null;
-    }
-
-    public int tamañoArreglo() {
-        return productos.size();
-    }
-
-    public ArrayList<Producto> getProductos() {
-        return productos;
+        this.modeloProductos = new ProductoDao(referencia);
+        Contrato.modeloTotalProductos = modeloTotalProductos;
     }
 
     public String getFecha() {
@@ -113,5 +51,15 @@ public class Contrato extends FileSave implements Serializable {
     public long getValorTotal() {
         return valorTotal;
     }
+
+    public ProductoDao getModeloProductos() {
+        return modeloProductos;
+    }
+
+    public static ProductoDao getModeloTotalProductos() {
+        return modeloTotalProductos;
+    }
+    
+    
 
 }

@@ -3,21 +3,16 @@ package vista.kardex;
 import controller.ControllerIngresoBusquedaProducto;
 import java.awt.BorderLayout;
 import java.awt.Color;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.JTableHeader;
-
 import Tablas.GestionCeldas;
 import Tablas.GestionEncabezadoTabla;
 import Tablas.ModeloTabla;
 import Tablas.UtilidadesContratos;
-
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -232,7 +227,7 @@ public class VentanaTablaContratos extends JFrame implements MouseListener {
         //teniendo la fila entonces se obtiene el objeto correspondiente para enviarse como parammetro o imprimir la informaci�n
         ContratoDao miContrato = new ContratoDao();
         Contrato contrato = miContrato.buscarContratoReferencia(tablaContratos.getValueAt(fila, UtilidadesContratos.REFERENCIA).toString());
-        ControllerIngresoBusquedaProducto cI = new ControllerIngresoBusquedaProducto(miContrato, miContrato.getContratos().indexOf(contrato));
+        ControllerIngresoBusquedaProducto cI = new ControllerIngresoBusquedaProducto(contrato);
         dispose();
     }
 

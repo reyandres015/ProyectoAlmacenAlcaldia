@@ -7,12 +7,10 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import modelo.dao.ContratoDao;
+import modelo.dao.*;
 import modelo.dto.kardex.Producto;
 import modelo.dto.kardex.Contrato;
 import vista.kardex.UIIngresoBusquedaProducto;
@@ -26,39 +24,39 @@ public class ControllerIngresoBusquedaProducto implements ActionListener {
 
     private final UIIngresoBusquedaProducto vista;
     private Contrato contrato;
-    DecimalFormat formato = new DecimalFormat("¤#,###");
+    private ProductoDao modeloProducto;
 
-    public ControllerIngresoBusquedaProducto(ContratoDao modeloContrato, int i) throws IOException {
+    public ControllerIngresoBusquedaProducto(Contrato contrato) throws IOException {
         this.vista = new UIIngresoBusquedaProducto();
-        this.contrato = modeloContrato.getContratos().get(i);
-        contrato.initDatos();
+        this.contrato = contrato;
+        this.modeloProducto = contrato.getModeloProductos();
         this.vista.ingresarBtn.addActionListener(this);
         this.vista.buscarProductoBtn.addActionListener(this);
         this.vista.productosBtn.addActionListener(this);
         this.vista.setVisible(true);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(this.vista.ingresarBtn)) {
             String descripcion = vista.descripcionField.getText();
-            if (contrato.buscarProductoDescripcion(descripcion) != null) {
+            if (modeloProducto.buscarProductoDescripcion(descripcion) != null) {
                 JOptionPane.showMessageDialog(null, "¡Ya existe un producto con la misma descripcion!");
             } else {
                 String referencia = vista.referenciaField.getText();
                 String ubicacion = vista.ubicacionField.getText();
                 String metodo = vista.metodoField.getText();
                 String proveedor = vista.proveedorField.getText();
-                Producto producto;
                 try {
-                    producto = new Producto(contrato.tamañoArreglo(), descripcion, referencia, ubicacion, metodo, contrato.getProveedor());
+                    Producto producto = new Producto(modeloProducto.tamañoArreglo(), descripcion, referencia, ubicacion, metodo, contrato.getProveedor());
                     if (descripcion.equalsIgnoreCase("") | referencia.equalsIgnoreCase("") | ubicacion.equalsIgnoreCase("") | metodo.equalsIgnoreCase("") | proveedor.equalsIgnoreCase("")) {
                         JOptionPane.showMessageDialog(null, "Los datos del producto estan incompletos");
                     } else {
-                        if (contrato.ingresarProducto(producto)) {
+                        if (modeloProducto.ingresarProducto(producto) && Contrato.getModeloTotalProductos().ingresarProducto(producto)) {
                             JOptionPane.showMessageDialog(null, "Se ha ingresado el producto satisfactoriamente");
-                            contrato.guardar();
+                            modeloProducto.guardar();
 
-                            ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem(), contrato);
+                            ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto);
                         } else {
                             JOptionPane.showMessageDialog(null, "No ha sido posible ingresar el producto");
                         }
@@ -70,29 +68,29 @@ public class ControllerIngresoBusquedaProducto implements ActionListener {
         }
         if (e.getSource().equals(this.vista.buscarProductoBtn)) {
             String descripcion = vista.buscarDescripcionField.getText();
-            Producto producto = contrato.buscarProductoDescripcion(descripcion);
+            Producto producto = modeloProducto.buscarProductoDescripcion(descripcion);
             if (producto == null) {
                 if (vista.buscarReferenciaField.getText().equals("")) {
                     JOptionPane.showMessageDialog(null, "No se ha encontrado el producto");
                 } else {
                     String referencia = vista.buscarReferenciaField.getText();
-                    producto = contrato.buscarProductoReferencia(referencia);
+                    producto = modeloProducto.buscarProductoReferencia(referencia);
                     if (producto == null) {
                         JOptionPane.showMessageDialog(null, "No se ha encontrado el producto");
                     } else {
                         producto.initDatos();
-                        ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem(), contrato);
+                        ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto);
                         vista.dispose();
                     }
                 }
             } else {
                 producto.initDatos();
-                ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto.getItem(), contrato);
+                ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto);
             }
         }
         if (e.getSource().equals(this.vista.productosBtn)) {
             try {
-                VentanaTablaProductos cp = new VentanaTablaProductos(contrato.getProductos());
+                VentanaTablaProductos cp = new VentanaTablaProductos(modeloProducto.getProductos());
                 cp.setVisible(true);
             } catch (IOException ex) {
                 Logger.getLogger(ControllerIngresoContratos.class.getName()).log(Level.SEVERE, null, ex);
