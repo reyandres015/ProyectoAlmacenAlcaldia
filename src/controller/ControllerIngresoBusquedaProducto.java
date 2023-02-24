@@ -25,14 +25,18 @@ public class ControllerIngresoBusquedaProducto implements ActionListener {
     private final UIIngresoBusquedaProducto vista;
     private Contrato contrato;
     private ProductoDao modeloProducto;
+    private ProductoDao modeloTotalProductos;
 
     public ControllerIngresoBusquedaProducto(Contrato contrato) throws IOException {
         this.vista = new UIIngresoBusquedaProducto();
         this.contrato = contrato;
         this.modeloProducto = contrato.getModeloProductos();
+        this.modeloTotalProductos = Contrato.getModeloTotalProductos();
         this.vista.ingresarBtn.addActionListener(this);
         this.vista.buscarProductoBtn.addActionListener(this);
         this.vista.productosBtn.addActionListener(this);
+        this.vista.referenciaContratoLabel.setText(contrato.getReferencia());
+        this.vista.referenciaField.setText(contrato.getReferencia());
         this.vista.setVisible(true);
     }
 
@@ -40,7 +44,7 @@ public class ControllerIngresoBusquedaProducto implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(this.vista.ingresarBtn)) {
             String descripcion = vista.descripcionField.getText();
-            if (modeloProducto.buscarProductoDescripcion(descripcion) != null) {
+            if (modeloProducto.buscarProductoDescripcion(descripcion) != null) { 
                 JOptionPane.showMessageDialog(null, "¡Ya existe un producto con la misma descripcion!");
             } else {
                 String referencia = vista.referenciaField.getText();
@@ -52,11 +56,12 @@ public class ControllerIngresoBusquedaProducto implements ActionListener {
                     if (descripcion.equalsIgnoreCase("") | referencia.equalsIgnoreCase("") | ubicacion.equalsIgnoreCase("") | metodo.equalsIgnoreCase("") | proveedor.equalsIgnoreCase("")) {
                         JOptionPane.showMessageDialog(null, "Los datos del producto estan incompletos");
                     } else {
-                        if (modeloProducto.ingresarProducto(producto) && Contrato.getModeloTotalProductos().ingresarProducto(producto)) {
+                        if (modeloProducto.ingresarProducto(producto) && modeloTotalProductos.ingresarProducto(producto)) {
                             JOptionPane.showMessageDialog(null, "Se ha ingresado el producto satisfactoriamente");
                             modeloProducto.guardar();
+                            modeloTotalProductos.guardar();
 
-                            ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto);
+                            ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto, modeloProducto);
                         } else {
                             JOptionPane.showMessageDialog(null, "No ha sido posible ingresar el producto");
                         }
@@ -79,18 +84,18 @@ public class ControllerIngresoBusquedaProducto implements ActionListener {
                         JOptionPane.showMessageDialog(null, "No se ha encontrado el producto");
                     } else {
                         producto.initDatos();
-                        ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto);
+                        ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto, modeloProducto);
                         vista.dispose();
                     }
                 }
             } else {
                 producto.initDatos();
-                ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto);
+                ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto, modeloProducto);
             }
         }
         if (e.getSource().equals(this.vista.productosBtn)) {
             try {
-                VentanaTablaProductos cp = new VentanaTablaProductos(modeloProducto.getProductos());
+                VentanaTablaProductos cp = new VentanaTablaProductos(modeloProducto);
                 cp.setVisible(true);
             } catch (IOException ex) {
                 Logger.getLogger(ControllerIngresoContratos.class.getName()).log(Level.SEVERE, null, ex);

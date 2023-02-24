@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import modelo.dao.ProductoDao;
 import modelo.dto.kardex.Contrato;
 import modelo.dto.kardex.InventarioProducto;
 import modelo.dto.kardex.Producto;
@@ -22,12 +23,14 @@ public class ControllerRegistro implements ActionListener {
 
     private final UIRegistro vistaRegistro;
     private Producto producto;
+    private ProductoDao modeloProducto;
     private Contrato contrato;
     DecimalFormat formato = new DecimalFormat("¤#,###");
 
-    public ControllerRegistro(Producto producto) {
+    public ControllerRegistro(Producto producto, ProductoDao modeloProducto) {
         this.vistaRegistro = new UIRegistro();
         this.producto = producto;
+        this.modeloProducto = modeloProducto;
         this.vistaRegistro.realizarEntradaBtn.addActionListener(this);
         this.vistaRegistro.realizarSalidaBtn.addActionListener(this);
         this.vistaRegistro.setVisible(true);
@@ -48,9 +51,10 @@ public class ControllerRegistro implements ActionListener {
                 if (producto.entradaProducto(cantidadEntrada, valorTotalEntrada)) {
                     InventarioProducto ip = new InventarioProducto(producto.tamañoArreglo(), fecha, conceptoEntrada, "Entrada", cantidadEntrada, valorUnitarioEntrada, valorTotalEntrada, cantidadEntrada);
                     if (producto.crearRegistro(ip)) {
+                        modeloProducto.guardar();
                         producto.guardar();
                         JOptionPane.showMessageDialog(null, "Se ha registrado la entrada satisfactoriamente");
-                        ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto);
+                        ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto, modeloProducto);
                         vistaRegistro.dispose();
                     }
                 } else {
@@ -79,7 +83,7 @@ public class ControllerRegistro implements ActionListener {
                         generarSalidaOrdenLlegada(inventarios.get(i).getValorUnitario(), restante);
                         producto.guardar();
                         JOptionPane.showMessageDialog(null, "Se ha registrado la salida satisfactoriamente");
-                        ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto);
+                        ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto ,modeloProducto);
                         vistaRegistro.dispose();
                         break;
                     }

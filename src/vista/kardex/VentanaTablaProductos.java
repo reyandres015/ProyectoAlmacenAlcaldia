@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import modelo.dao.ProductoDao;
 import modelo.dto.kardex.Contrato;
 import modelo.dto.kardex.Producto;
 
@@ -41,17 +42,19 @@ public class VentanaTablaProductos extends JFrame implements MouseListener {
     ModeloTabla modelo;//modelo definido en la clase ModeloTabla
     private int filasTabla;
     private int columnasTabla;
-    private Contrato contrato;
+    private ProductoDao modeloProductos;
     DecimalFormat formato = new DecimalFormat("¤#,###");
 
     /**
      * Create the frame.
      *
-     * @param listaProductos
+     * @param modeloProductos
      * @throws java.io.IOException
      */
-    public VentanaTablaProductos(ArrayList<Producto> listaProductos) throws IOException {
-        this.listaProductos = listaProductos;
+    public VentanaTablaProductos(ProductoDao modeloProductos) throws IOException {
+        this.modeloProductos = modeloProductos;
+        this.modeloProductos.initDatos();
+        this.listaProductos = modeloProductos.getProductos();
         setSize(1121, 453);
 
         iniciarComponentes();
@@ -201,6 +204,7 @@ public class VentanaTablaProductos extends JFrame implements MouseListener {
 		 * que solo se produzca algo si selecciono una fila de esa columna
          */
         if (columna == UtilidadesProductos.PERFIL) {
+            System.out.println("hola");
             try {
                 //sabiendo que corresponde a la columna de perfil, envio la posicion de la fila seleccionada
                 validarSeleccionMouse(fila);
@@ -221,9 +225,9 @@ public class VentanaTablaProductos extends JFrame implements MouseListener {
         UtilidadesProductos.filaSeleccionada = fila;
 
         //teniendo la fila entonces se obtiene el objeto correspondiente para enviarse como parammetro o imprimir la informaci�n
-        Producto producto = contrato.getModeloProductos().buscarProductoDescripcion(tablaProductos.getValueAt(fila, UtilidadesProductos.DESCRIPCION).toString());
+        Producto producto = modeloProductos.buscarProductoDescripcion(tablaProductos.getValueAt(fila, UtilidadesProductos.DESCRIPCION).toString());
         producto.initDatos();
-        ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto);
+        ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto, modeloProductos);
         
     }
 

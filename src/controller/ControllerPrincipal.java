@@ -50,7 +50,7 @@ public class ControllerPrincipal implements ActionListener {
 
         if (e.getSource().equals(this.vista.BtnTablaContratos)) {
             try {
-                VentanaTablaContratos cp = new VentanaTablaContratos();
+                VentanaTablaContratos cp = new VentanaTablaContratos(modeloContratos);
                 cp.setVisible(true);
             } catch (IOException ex) {
                 Logger.getLogger(ControllerIngresoContratos.class.getName()).log(Level.SEVERE, null, ex);
@@ -59,7 +59,7 @@ public class ControllerPrincipal implements ActionListener {
 
         if (e.getSource().equals(this.vista.BtnTablaProductos)) {
             try {
-                VentanaTablaProductos vP = new VentanaTablaProductos(modeloTotalProductos.getProductos());
+                VentanaTablaProductos vP = new VentanaTablaProductos(modeloTotalProductos);
                 vP.setVisible(true);
             } catch (IOException ex) {
                 Logger.getLogger(ControllerPrincipal.class.getName()).log(Level.SEVERE, null, ex);

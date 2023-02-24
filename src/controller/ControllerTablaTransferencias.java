@@ -3,25 +3,24 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import modelo.dao.ProductoDao;
 import modelo.dto.kardex.*;
 import vista.kardex.UITablaTransferencias;
 
 public class ControllerTablaTransferencias implements ActionListener {
 
     private UITablaTransferencias vistaTabla;
-
     private Producto producto;
+    private ProductoDao modeloProducto;
     private DefaultTableModel modeloTabla;
     DecimalFormat formato = new DecimalFormat("¤#,###");
 
-    public ControllerTablaTransferencias(Producto producto) {
+    public ControllerTablaTransferencias(Producto producto, ProductoDao modeloProducto) {
         this.vistaTabla = new UITablaTransferencias();
         this.producto = producto;
+        this.modeloProducto = modeloProducto;
         this.modeloTabla = (DefaultTableModel) this.vistaTabla.tablaInformacionProducto.getModel();
         datosProducto();
         actualizarTabla();
@@ -57,7 +56,7 @@ public class ControllerTablaTransferencias implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(this.vistaTabla.ingresarRegistroBtn)) {
-            ControllerRegistro cR = new ControllerRegistro(this.producto);
+            ControllerRegistro cR = new ControllerRegistro(this.producto, this.modeloProducto);
             vistaTabla.dispose();
         }
     }

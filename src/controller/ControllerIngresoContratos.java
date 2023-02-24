@@ -32,14 +32,10 @@ public class ControllerIngresoContratos implements ActionListener {
         this.modeloTotalProductos = modeloTotalProductos;
         this.vista.ingresarContratoBtn.addActionListener(this);
         this.vista.buscarProveedorBtn.addActionListener(this);
-        this.vista.contratosBtn.addActionListener(this);
 
         this.vista.setVisible(true);
     }
 
-    /**
-     * @param e
-     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(this.vista.buscarProveedorBtn)) {
@@ -88,15 +84,6 @@ public class ControllerIngresoContratos implements ActionListener {
                 } catch (IOException ex) {
                     Logger.getLogger(ControllerIngresoContratos.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-        }
-
-        if (e.getSource().equals(this.vista.contratosBtn)) {
-            try {
-                VentanaTablaContratos cp = new VentanaTablaContratos();
-                cp.setVisible(true);
-            } catch (IOException ex) {
-                Logger.getLogger(ControllerIngresoContratos.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

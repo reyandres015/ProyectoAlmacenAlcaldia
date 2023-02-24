@@ -64,8 +64,6 @@ public class UIIngresoContratos extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         valorContrato = new javax.swing.JTextField();
         ingresarContratoBtn = new javax.swing.JButton();
-        jToolBar1 = new javax.swing.JToolBar();
-        contratosBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -291,11 +289,6 @@ public class UIIngresoContratos extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jToolBar1.setRollover(true);
-
-        contratosBtn.setText("Tabla Contratos");
-        jToolBar1.add(contratosBtn);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -309,17 +302,13 @@ public class UIIngresoContratos extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(250, 250, 250)
-                        .addComponent(jLabel5))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 751, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel5)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
+                .addContainerGap()
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -389,7 +378,6 @@ public class UIIngresoContratos extends javax.swing.JFrame {
     public javax.swing.JButton buscarProveedorBtn;
     public javax.swing.JTextField celularRepre;
     public javax.swing.JTextField conceptoField;
-    public javax.swing.JButton contratosBtn;
     public javax.swing.JTextField correoRepre;
     public javax.swing.JTextField direcionRepre;
     public javax.swing.JTextField empresaField;
@@ -416,7 +404,6 @@ public class UIIngresoContratos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JToolBar jToolBar1;
     public javax.swing.JTextField nombreRepreField;
     public javax.swing.JTextArea objetoField;
     public javax.swing.JTextField valorContrato;

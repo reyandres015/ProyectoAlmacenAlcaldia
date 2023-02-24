@@ -33,7 +33,7 @@ public class VentanaTablaContratos extends JFrame implements MouseListener {
     private JScrollPane scrollPaneTabla;
     private JTable tablaContratos;
     DecimalFormat formato = new DecimalFormat("¤#,###");
-    ArrayList<Contrato> listaPersonas;//lista que simula la informaci�n de la BD
+    ArrayList<Contrato> listaContratos;//lista que simula la informaci�n de la BD
 
     ModeloTabla modelo;//modelo definido en la clase ModeloTabla
     private int filasTabla;
@@ -43,7 +43,8 @@ public class VentanaTablaContratos extends JFrame implements MouseListener {
      * Create the frame.
      * @throws java.io.IOException
      */
-    public VentanaTablaContratos() throws IOException {
+    public VentanaTablaContratos(ContratoDao modeloContratos) throws IOException {
+        this.listaContratos = modeloContratos.getContratos();
         setSize(1121, 453);
 
         iniciarComponentes();
@@ -81,8 +82,6 @@ public class VentanaTablaContratos extends JFrame implements MouseListener {
      */
     private void construirTabla() throws IOException {
 
-        listaPersonas = consultarListaContratos();
-
         ArrayList<String> titulosList = new ArrayList<>();
 
         titulosList.add("Fecha");
@@ -107,17 +106,6 @@ public class VentanaTablaContratos extends JFrame implements MouseListener {
     }
 
     /**
-     * Permite simular el llenado de personas en una lista que posteriormente
-     * alimentar� la tabla
-     *
-     * @return
-     */
-    private ArrayList<Contrato> consultarListaContratos() throws IOException {
-        ContratoDao cD = new ContratoDao();
-        return cD.getContratos();
-    }
-
-    /**
      * Llena la informaci�n de la tabla usando la lista de personas trabajada
      * anteriormente, guardandola en una matriz que se retorna con toda la
      * informaci�n para luego ser asignada al modelo
@@ -131,16 +119,16 @@ public class VentanaTablaContratos extends JFrame implements MouseListener {
 		 * a todos los usuarios, mientras que las columnas son estaticas
 		 * correspondiendo a las columnas definidas por defecto
          */
-        String informacion[][] = new String[listaPersonas.size()][titulosList.size()];
+        String informacion[][] = new String[listaContratos.size()][titulosList.size()];
 
         for (int x = 0; x < informacion.length; x++) {
 
-            informacion[x][UtilidadesContratos.FECHA] = listaPersonas.get(x).getFecha() + "";
-            informacion[x][UtilidadesContratos.OBJETO] = listaPersonas.get(x).getObjeto() + "";
-            informacion[x][UtilidadesContratos.REFERENCIA] = listaPersonas.get(x).getReferencia() + "";
-            informacion[x][UtilidadesContratos.EMPRESA] = listaPersonas.get(x).getProveedor().getEmpresa() + "";
-            informacion[x][UtilidadesContratos.CELULAR] = listaPersonas.get(x).getProveedor().getRepresentanteLegal().getCelular() + "";
-            informacion[x][UtilidadesContratos.VALORTOTAL] = formato.format(listaPersonas.get(x).getValorTotal()) + "";
+            informacion[x][UtilidadesContratos.FECHA] = listaContratos.get(x).getFecha() + "";
+            informacion[x][UtilidadesContratos.OBJETO] = listaContratos.get(x).getObjeto() + "";
+            informacion[x][UtilidadesContratos.REFERENCIA] = listaContratos.get(x).getReferencia() + "";
+            informacion[x][UtilidadesContratos.EMPRESA] = listaContratos.get(x).getProveedor().getEmpresa() + "";
+            informacion[x][UtilidadesContratos.CELULAR] = listaContratos.get(x).getProveedor().getRepresentanteLegal().getCelular() + "";
+            informacion[x][UtilidadesContratos.VALORTOTAL] = formato.format(listaContratos.get(x).getValorTotal()) + "";
             //se asignan las plabras clave para que en la clase GestionCeldas se use para asignar el icono correspondiente
             informacion[x][UtilidadesContratos.PERFIL] = "PERFIL";
         }
