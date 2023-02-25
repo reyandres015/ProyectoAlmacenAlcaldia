@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +55,7 @@ public class Producto extends FileSave implements Serializable {
             this.salida = new ObjectOutputStream(new FileOutputStream(filePath));
             this.salida.writeObject(inventarios);
             this.salida.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }

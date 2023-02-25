@@ -20,22 +20,23 @@ import vista.kardex.UIRegistro;
  * @author reyan
  */
 public class ControllerRegistro implements ActionListener {
-
+    
     private final UIRegistro vistaRegistro;
-    private Producto producto;
-    private ProductoDao modeloProducto;
+    private final Producto producto;
+    private final ProductoDao modeloProducto;
     private Contrato contrato;
     DecimalFormat formato = new DecimalFormat("¤#,###");
-
+    
     public ControllerRegistro(Producto producto, ProductoDao modeloProducto) {
         this.vistaRegistro = new UIRegistro();
         this.producto = producto;
         this.modeloProducto = modeloProducto;
         this.vistaRegistro.realizarEntradaBtn.addActionListener(this);
         this.vistaRegistro.realizarSalidaBtn.addActionListener(this);
+        this.vistaRegistro.conceptoEntradaField.setText(contrato.getReferencia());
         this.vistaRegistro.setVisible(true);
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(this.vistaRegistro.realizarEntradaBtn)) {
@@ -62,7 +63,7 @@ public class ControllerRegistro implements ActionListener {
                 }
             }
         }
-
+        
         if (e.getSource().equals(this.vistaRegistro.realizarSalidaBtn)) {
             if (vistaRegistro.cantidadSalidaField.getText().equalsIgnoreCase("")) {
                 JOptionPane.showMessageDialog(null, "Los datos de la salida estan incompletos");
@@ -83,7 +84,7 @@ public class ControllerRegistro implements ActionListener {
                         generarSalidaOrdenLlegada(inventarios.get(i).getValorUnitario(), restante);
                         producto.guardar();
                         JOptionPane.showMessageDialog(null, "Se ha registrado la salida satisfactoriamente");
-                        ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto ,modeloProducto);
+                        ControllerTablaTransferencias cp = new ControllerTablaTransferencias(producto, modeloProducto);
                         vistaRegistro.dispose();
                         break;
                     }
@@ -91,13 +92,13 @@ public class ControllerRegistro implements ActionListener {
             }
         }
     }
-
+    
     public boolean generarSalidaOrdenLlegada(long valorUnitario, int cantidadSalida) {
         if (producto.salidaProducto(cantidadSalida, valorUnitario * cantidadSalida)) {
             InventarioProducto ip = new InventarioProducto(producto.tamañoArreglo(), vistaRegistro.fechaSalidaField.getText(), vistaRegistro.conceptoSalidaField.getText(), "Salida", cantidadSalida, valorUnitario, cantidadSalida * valorUnitario, 0);
             if (producto.crearRegistro(ip)) {
                 return true;
-
+                
             } else {
                 JOptionPane.showMessageDialog(null, "No ha sido posible registrar la entrada");
                 return false;

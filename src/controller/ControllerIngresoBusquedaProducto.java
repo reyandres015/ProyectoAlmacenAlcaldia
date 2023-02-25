@@ -23,9 +23,9 @@ import vista.kardex.VentanaTablaProductos;
 public class ControllerIngresoBusquedaProducto implements ActionListener {
 
     private final UIIngresoBusquedaProducto vista;
-    private Contrato contrato;
-    private ProductoDao modeloProducto;
-    private ProductoDao modeloTotalProductos;
+    private final Contrato contrato;
+    private final ProductoDao modeloProducto;
+    private final ProductoDao modeloTotalProductos;
 
     public ControllerIngresoBusquedaProducto(Contrato contrato) throws IOException {
         this.vista = new UIIngresoBusquedaProducto();

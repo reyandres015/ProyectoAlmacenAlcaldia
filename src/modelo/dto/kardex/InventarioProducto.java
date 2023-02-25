@@ -1,17 +1,16 @@
 package modelo.dto.kardex;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 public class InventarioProducto implements Serializable {
 
     private int item;
-    private String fecha;
-    private String concepto;
-    private String movimiento;
-    private int cantidad;
-    private long valorUnitario;
-    private long valorTotal;
+    private final String fecha;
+    private final String concepto;
+    private final String movimiento;
+    private final int cantidad;
+    private final long valorUnitario;
+    private final long valorTotal;
     private int cantidadDisponible;
 
     /**

@@ -13,9 +13,9 @@ import modelo.dto.Persona;
  */
 public class Proveedor implements Serializable{
 
-    private String empresa;
-    private String documento;
-    private Persona representanteLegal;
+    private final String empresa;
+    private final String documento;
+    private final Persona representanteLegal;
 
     public Proveedor(String empresa, String documento, Persona representanteLegal) {
         this.empresa = empresa;

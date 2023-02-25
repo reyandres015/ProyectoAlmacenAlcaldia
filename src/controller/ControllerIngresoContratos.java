@@ -15,7 +15,6 @@ import modelo.dto.Persona;
 import modelo.dto.kardex.Contrato;
 import modelo.dto.kardex.Proveedor;
 import vista.kardex.UIIngresoContratos;
-import vista.kardex.VentanaTablaContratos;
 
 /**
  * @author reyan

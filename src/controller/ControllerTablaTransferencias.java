@@ -11,10 +11,10 @@ import vista.kardex.UITablaTransferencias;
 
 public class ControllerTablaTransferencias implements ActionListener {
 
-    private UITablaTransferencias vistaTabla;
-    private Producto producto;
-    private ProductoDao modeloProducto;
-    private DefaultTableModel modeloTabla;
+    private final UITablaTransferencias vistaTabla;
+    private final Producto producto;
+    private final ProductoDao modeloProducto;
+    private final DefaultTableModel modeloTabla;
     DecimalFormat formato = new DecimalFormat("¤#,###");
 
     public ControllerTablaTransferencias(Producto producto, ProductoDao modeloProducto) {
@@ -54,6 +54,7 @@ public class ControllerTablaTransferencias implements ActionListener {
         }
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(this.vistaTabla.ingresarRegistroBtn)) {
             ControllerRegistro cR = new ControllerRegistro(this.producto, this.modeloProducto);
